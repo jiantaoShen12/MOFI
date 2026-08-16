@@ -73,8 +73,7 @@ adata = cb_tl.fit(adata_rna,
 ### Full Pipeline (Map Training → Dynamics → Evaluation → Visualization)
 
 ```bash
-python examples/scripts/run_pipeline.py \
-    --config examples/configs/GSE213152/pipeline_GSE213152_12.yaml
+
 ```
 
 ## 📚 Tutorials
