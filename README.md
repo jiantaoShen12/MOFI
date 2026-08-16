@@ -10,14 +10,14 @@
 
 </div>
 
-**MOFI** is a computational framework that reconstructs coordinated multi-omics developmental trajectories from discrete paired snapshots. It integrates synchronized unbalanced optimal transport with a learned cross-omics mapper to jointly infer velocity fields, growth rates, and fate trajectories across two omics.
+**MOFI** is a computational framework that reconstructs coordinated multi-omics developmental trajectories from discrete paired snapshots.
 
 ## 🌟 Highlights
 
-- **Synchronized Multi-Omics Dynamics**: Reconstructs continuous developmental trajectories that remain coherent across transcriptomic and epigenomic/proteomic spaces
-- **Cross-Omics Regulatory Decoding**: Quantifies bidirectional gene-protein regulatory interactions at single-cell resolution via transport map Jacobians
-- **In Silico Perturbation**: Simulates gene perturbations and predicts fate shifts across omics
-- **Flexible Data Requirements**: Works with as few as 2 paired time points; supports asymmetric temporal sampling across omics
+- **Synchronized Multi-Omics Dynamics**: 
+- **Cross-Omics Regulatory Decoding**: 
+- **In Silico Perturbation**:
+- **Flexible Data Requirements**: 
 
 ## 🛠 Installation (The code has not been made public yet.)
 
