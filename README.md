@@ -82,9 +82,6 @@ python examples/scripts/run_pipeline.py \
 | Notebook | Description | Data |
 |----------|-------------|------|
 | [00_simulation.ipynb](tutorial/00_simulation.ipynb) | Single-modal simulation benchmark | simulation4_2d |
-| [01_geo_kidney_GSE213152.ipynb](tutorial/01_geo_kidney_GSE213152.ipynb) | Kidney organoid differentiation (RNA+ATAC) | GSE213152 |
-| [02_geo_kidney_GSE233134.ipynb](tutorial/02_geo_kidney_GSE233134.ipynb) | Kidney organoid differentiation (RNA+ATAC) | GSE233134 |
-| [03_hspcs_31800.ipynb](tutorial/03_hspcs_31800.ipynb) | HSPC fate decisions (RNA+Protein) + perturbation | 31800 |
 
 ## 📁 Repository Structure
 
@@ -115,11 +112,7 @@ MOFI/
 
 ## 🔬 Biological Systems Demonstrated
 
-1. **In Silico Benchmark**: Controlled simulation with ground-truth dynamics
-2. **Kidney Organoid Differentiation** (GSE213152, GSE233134): RNA + ATAC, multi-lineage fate commitment
-3. **Hematopoietic Progenitor Cells** (31800): RNA + Protein, perturbation-responsive fate prediction
-4. **Human Brain Organoid Maturation**: RNA + ATAC, gradual compositional redistribution
-5. **Developing Human Cerebral Cortex**: RNA + ATAC, continuous corticogenesis with lineage allocation
+
 
 ## 📖 Citation
 
