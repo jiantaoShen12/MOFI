@@ -1,0 +1,57 @@
+ckpt_dir: paper_data/dynamics/hc_author5
+model:
+  components:
+  - velocity
+  - growth
+  growth_net:
+    hidden_dim: 400
+    n_layers: 2
+    residual: false
+  multi:
+    Map_model_path: paper_data/maps/hc_author5/best_model.pt
+    hidden_dim: 32
+    input_dim1: 50
+    input_dim2: 50
+    mapper_type: ae
+    mode: (1,2)
+    multi_alpha: 0.1
+    multi_use: true
+  velocity_net:
+    hidden_dim: 400
+    n_layers: 2
+    residual: false
+training:
+  defaults:
+    batch_size: 400
+    lambda_ot_sec: 1
+    lr: 0.0001
+  plan:
+  - OT_loss: sinkhorn_detach
+    epochs: 100
+    global_mass: false
+    lambda_energy: 0
+    lambda_mass: 4
+    lambda_ot: 1.0
+    method: ODEFunc
+    mode: neural_ode
+    name: Pretrain1
+    save_strategy: last
+  - OT_loss: sinkhorn_detach
+    epochs: 100
+    global_mass: true
+    lambda_energy: 1
+    lambda_mass: 2
+    lambda_ot: 1.0
+    method: ODEFunc
+    mode: neural_ode
+    name: Pretrain2
+    save_strategy: last
+  - OT_loss: sinkhorn
+    epochs: 200
+    global_mass: true
+    lambda_energy: 0.01
+    lambda_mass: 1
+    lambda_ot: 1
+    method: ODEFunc
+    mode: neural_ode
+    name: Train

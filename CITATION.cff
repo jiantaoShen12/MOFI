@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+title: "MOFI: Multi-Omics Fate Inference"
+message: "If you use MOFI, please cite the associated manuscript when its final bibliographic record is available."
+type: software
+authors:
+  - family-names: Shen
+    given-names: Jiantao
+  - family-names: Liu
+    given-names: Rui
+  - family-names: Zhou
+    given-names: Peijie
+version: 0.2.0
+date-released: 2026-09-09
+repository-code: "https://github.com/jiantaoShen12/MOFI_tmp_tmp"
+url: "https://github.com/jiantaoShen12/MOFI_tmp_tmp"
+license: MIT

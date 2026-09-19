@@ -1,0 +1,286 @@
+paths:
+  dynamic_adata: paper_data/dynamics/hc_author5/adata.h5ad
+  main_processed: paper_data/processed/hc_author5/rna.h5ad
+  sub_processed: paper_data/processed/hc_author5/atac.h5ad
+  map_model_path: paper_data/maps/hc_author5/best_model.pt
+output:
+  root_dir: results/hc_author5
+figure:
+  trajectory_projection: pca
+inference:
+  device: cuda
+  seed: 42
+  dt: 0.05
+  init_time: 0.0
+  mapper_type: ae
+  mapper_kwargs: {}
+  sample_max_cells: 2000
+  time_grid_presets:
+    coarse_dense:
+    - 1.0
+    - 2.0
+    - 3.0
+    - 4.0
+  passes:
+  - sample
+  run_grids:
+  - mode: coarse_dense
+analysis:
+  time_key: time_point_processed
+  cell_type_key: author_cell_type
+  decode_mode: pca_projection
+  classifier:
+    type: linear
+    max_iter: 1200
+    train_space: joint
+  path_definition:
+    target_cell_type: IN-MGE
+  main_var_markers:
+  - HES5
+  - VIM
+  - EOMES
+  - GAD1
+  - GAD2
+  - PROX1
+  - CALB2
+  - VIP
+  - SOX6
+  - ERBB4
+  - RELN
+  - LEF1
+  sec_var_markers:
+  - HES5
+  - VIM
+  - EOMES
+  - GAD1
+  - GAD2
+  - PROX1
+  - CALB2
+  - VIP
+  - SOX6
+  - ERBB4
+  - RELN
+  - LEF1
+  programs:
+    rg_ipc_program:
+    - HES5
+    - VIM
+    - EOMES
+    - HES1
+    - YAP1
+    - WWTR1
+    interneuron_cge_program:
+    - PROX1
+    - CALB2
+    - VIP
+    - NR2F2
+    - LEF1
+    - ALDH1A2
+    interneuron_mge_program:
+    - SOX6
+    - ERBB4
+    - GAD1
+    - GAD2
+    - RELN
+    - GLI3
+  prior_targets:
+  - HES5
+  - VIM
+  - EOMES
+  - GAD1
+  - GAD2
+  - PROX1
+  - CALB2
+  - VIP
+  - SOX6
+  - ERBB4
+  - RELN
+  - LEF1
+  - NR2F2
+  - GLI3
+  - HES1
+  - ALDH1A2
+  - YAP1
+  - WWTR1
+  - FGFR2
+  jacobian_grn:
+    max_cells: 32
+    top_k: 20
+    seed: 42
+    include_hessian_term: true
+    hessian_eps: 0.001
+    mapper_batch_size: 64
+    main_var_features:
+    - HES5
+    - VIM
+    - EOMES
+    - GAD1
+    - GAD2
+    - PROX1
+    - CALB2
+    - VIP
+    - SOX6
+    - ERBB4
+    - RELN
+    - LEF1
+    - NR2F2
+    - GLI3
+    - HES1
+    - ALDH1A2
+    - YAP1
+    - WWTR1
+    - FGFR2
+    sec_var_features:
+    - HES5
+    - VIM
+    - EOMES
+    - GAD1
+    - GAD2
+    - PROX1
+    - CALB2
+    - VIP
+    - SOX6
+    - ERBB4
+    - RELN
+    - LEF1
+    - NR2F2
+    - GLI3
+    - HES1
+    - ALDH1A2
+    - YAP1
+    - WWTR1
+    - FGFR2
+  perturbation:
+    dt: 0.05
+    device: cpu
+    target_cell_type: IN-MGE
+    target_groups:
+    - name: WNT_BCATENIN_CGE
+      genes:
+      - LEF1
+      - NR2F2
+      - PROX1
+    - name: BMP_SHH_AXIS
+      genes:
+      - GLI3
+      - HES1
+      - FGFR2
+    - name: SHH_MGE_PROGRAM
+      genes:
+      - SOX6
+      - ERBB4
+      - GAD1
+    - name: NOTCH_PROGENITOR_TIMING
+      genes:
+      - HES1
+      - HES5
+      - VIM
+    - name: RA_CGE_SWITCH
+      genes:
+      - ALDH1A2
+      - NR2F2
+      - PROX1
+    - name: HIPPO_PROGENITOR_GROWTH
+      genes:
+      - YAP1
+      - WWTR1
+      - EOMES
+    z_scores:
+    - -6.0
+    - -4.0
+    - -2.0
+    - 0.0
+    - 2.0
+    - 4.0
+    - 6.0
+    sweep_space: joint
+    sweep_cell_types:
+    - RG
+    - IPC
+    - IN-fetal
+    - IN-CGE
+    - IN-MGE
+    focus_curve_cell_types:
+    - IN-CGE
+    - IN-MGE
+    focus_curve_scores:
+    - -6.0
+    - -4.0
+    - -2.0
+    - 0.0
+    - 2.0
+    - 4.0
+    - 6.0
+    missing_target_policy: zero
+  key_molecule:
+    path_quantile: 0.75
+    fdr_alpha: 0.05
+    min_abs_log2fc: 0.25
+    min_pct: 0.1
+    top_k: 30
+    min_time_hits: 2
+    main_var_panel:
+    - HES5
+    - VIM
+    - EOMES
+    - GAD1
+    - GAD2
+    - PROX1
+    - CALB2
+    - VIP
+    - SOX6
+    - ERBB4
+    - RELN
+    - LEF1
+    - NR2F2
+    - GLI3
+    - HES1
+    - ALDH1A2
+    - YAP1
+    - WWTR1
+    - FGFR2
+    sec_var_panel:
+    - HES5
+    - VIM
+    - EOMES
+    - GAD1
+    - GAD2
+    - PROX1
+    - CALB2
+    - VIP
+    - SOX6
+    - ERBB4
+    - RELN
+    - LEF1
+    - NR2F2
+    - GLI3
+    - HES1
+    - ALDH1A2
+    - YAP1
+    - WWTR1
+    - FGFR2
+figure:
+  theme: journal
+  dpi: 260
+  marker_top_n: 8
+  cell_type_top_n: 5
+  cell_type_order: [RG, IPC, IN-fetal, IN-CGE, IN-MGE]
+  cell_type_palette:
+    RG: '#B7D98C'
+    IPC: '#4E8B57'
+    IN-fetal: '#F3BCCB'
+    IN-CGE: '#D96C93'
+    IN-MGE: '#7B6FB2'
+  program_top_n: 12
+  perturb_max_groups: 8
+  perturb_max_cell_types: 5
+auto_meta:
+  dataset: hc_author5_12_2
+  selected_direction: '12'
+  dynamic_mode:
+  - 1
+  - 2
+  primary_domain: 1
+  secondary_domain: 2
+  domain1_processed: paper_data/processed/hc_author5/rna.h5ad
+  domain2_processed: paper_data/processed/hc_author5/atac.h5ad

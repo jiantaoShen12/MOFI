@@ -1,0 +1,422 @@
+paths:
+  dynamic_adata: paper_data/dynamics/ho/adata.h5ad
+  main_processed: paper_data/processed/ho/rna.h5ad
+  sub_processed: paper_data/processed/ho/atac.h5ad
+  map_model_path: paper_data/maps/ho/best_model.pt
+output:
+  root_dir: results/ho
+inference:
+  device: cuda
+  seed: 42
+  dt: 0.05
+  init_time: 0.0
+  mapper_type: ae
+  mapper_kwargs: {}
+  sample_max_cells: 2000
+  time_grid_presets:
+    coarse_dense:
+    - 0.5
+    - 1.0
+    - 1.5
+    - 2.0
+    - 2.5
+    - 3.0
+    - 3.5
+    - 4.0
+    - 4.5
+    - 5.0
+    - 5.5
+    - 6.0
+    - 6.5
+    - 7.0
+    - 7.5
+    - 8.0
+    - 8.5
+    - 9.0
+  passes:
+  - sample
+  run_grids:
+  - mode: coarse_dense
+analysis:
+  time_key: time_point_processed
+  cell_type_key: cell_type
+  decode_mode: pca_projection
+  classifier:
+    type: linear
+    max_iter: 1200
+    train_space: joint
+  path_definition:
+    target_cell_type: organoid
+  main_var_markers:
+  - POU5F1
+  - TDGF1
+  - EPCAM
+  - FOXD3-AS1
+  - LIN28A
+  - L1TD1
+  - PRTG
+  - IGFBP5
+  - PRSS23
+  - PTN
+  - CLDN6
+  - BST2
+  - GPC3
+  - TNNT1
+  - STMN2
+  - GPM6A
+  - GAP43
+  - ELAVL4
+  - MAPT
+  - NR2F1
+  - HES6
+  - DLX2
+  - ASCL1
+  - NKX2-1
+  - LHX8
+  - BCL11A
+  - ID1
+  - WNT7B
+  - WNT5B
+  - FGF8
+  - SPRY1
+  sec_var_markers:
+  - POU5F1
+  - LIN28A
+  - PTN
+  - PRTG
+  - SULF1
+  - SCNN1A
+  - ASIC2
+  - ROR1
+  - TMEM256-PLSCR3
+  - TMEM256-PLSCR3.1
+  - BCAS3
+  - SCHIP1.1
+  - COG8.1
+  - WNT3A
+  - WNT7B
+  - FOXG1
+  - NKX2-1
+  - LHX8
+  - STMN2
+  - GPM6A
+  - ELAVL4
+  - CUBN
+  - TSPEAR
+  - WFIKKN1
+  - GCNT2
+  - CDH1
+  programs:
+    early_pluripotency:
+    - POU5F1
+    - TDGF1
+    - LIN28A
+    - EPCAM
+    - FOXD3-AS1
+    - L1TD1
+    transition_nect_nepi:
+    - PRTG
+    - IGFBP5
+    - PRSS23
+    - PTN
+    - CLDN6
+    - BST2
+    - GPC3
+    neuro_maturation:
+    - STMN2
+    - GPM6A
+    - GAP43
+    - ELAVL4
+    - MAPT
+    - NR2F1
+    - HES6
+  programs_sec:
+    early_pluripotency:
+    - POU5F1
+    - TDGF1
+    - LIN28A
+    transition_nect_nepi:
+    - PRTG
+    - PTN
+    neuro_maturation:
+    - STMN2
+    - GPM6A
+    - ELAVL4
+  prior_targets:
+  - STMN2
+  - GPM6A
+  - GAP43
+  - ELAVL4
+  - MAPT
+  - NR2F1
+  - HES6
+  - DLX2
+  - ASCL1
+  - NKX2-1
+  - LHX8
+  - BCL11A
+  - ID1
+  - WNT7B
+  - WNT5B
+  - FGF8
+  - SPRY1
+  - PRTG
+  - IGFBP5
+  - PRSS23
+  - PTN
+  jacobian_grn:
+    max_cells: 64
+    top_k: 30
+    seed: 42
+    include_hessian_term: true
+    hessian_eps: 0.001
+    mapper_batch_size: 128
+    time_points:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    main_var_features:
+    - POU5F1
+    - TDGF1
+    - EPCAM
+    - FOXD3-AS1
+    - LIN28A
+    - L1TD1
+    - PRTG
+    - IGFBP5
+    - PRSS23
+    - PTN
+    - CLDN6
+    - BST2
+    - GPC3
+    - TNNT1
+    - STMN2
+    - GPM6A
+    - GAP43
+    - ELAVL4
+    - MAPT
+    - NR2F1
+    - HES6
+    - DLX2
+    - ASCL1
+    - NKX2-1
+    - LHX8
+    - BCL11A
+    - ID1
+    - WNT7B
+    - WNT5B
+    - FGF8
+    - SPRY1
+    sec_var_features:
+    - POU5F1
+    - LIN28A
+    - PTN
+    - PRTG
+    - SULF1
+    - SCNN1A
+    - ASIC2
+    - ROR1
+    - TMEM256-PLSCR3
+    - TMEM256-PLSCR3.1
+    - BCAS3
+    - SCHIP1.1
+    - COG8.1
+    - WNT3A
+    - WNT7B
+    - FOXG1
+    - NKX2-1
+    - LHX8
+    - STMN2
+    - GPM6A
+    - ELAVL4
+    - CUBN
+    - TSPEAR
+    - WFIKKN1
+    - GCNT2
+    - CDH1
+  perturbation:
+    dt: 0.05
+    device: cpu
+    target_cell_type: organoid
+    target_groups:
+    - name: sanity_neuro
+      genes:
+      - STMN2
+    z_scores:
+    - -1.0
+    - 1.0
+    sweep_space: joint
+    sweep_cell_types:
+    - organoid
+    - nepi
+    - nect
+    - EB
+    missing_target_policy: zero
+  key_molecule:
+    path_quantile: 0.75
+    fdr_alpha: 0.05
+    min_abs_log2fc: 0.25
+    min_pct: 0.1
+    top_k: 50
+    min_time_hits: 3
+    main_var_panel:
+    - POU5F1
+    - TDGF1
+    - EPCAM
+    - FOXD3-AS1
+    - LIN28A
+    - L1TD1
+    - PRTG
+    - IGFBP5
+    - PRSS23
+    - PTN
+    - CLDN6
+    - BST2
+    - GPC3
+    - TNNT1
+    - STMN2
+    - GPM6A
+    - GAP43
+    - ELAVL4
+    - MAPT
+    - NR2F1
+    - HES6
+    - DLX2
+    - ASCL1
+    - NKX2-1
+    - LHX8
+    - BCL11A
+    - ID1
+    - WNT7B
+    - WNT5B
+    - FGF8
+    - SPRY1
+    sec_var_panel:
+    - POU5F1
+    - LIN28A
+    - PTN
+    - PRTG
+    - SULF1
+    - SCNN1A
+    - ASIC2
+    - ROR1
+    - TMEM256-PLSCR3
+    - TMEM256-PLSCR3.1
+    - BCAS3
+    - SCHIP1.1
+    - COG8.1
+    - WNT3A
+    - WNT7B
+    - FOXG1
+    - NKX2-1
+    - LHX8
+    - STMN2
+    - GPM6A
+    - ELAVL4
+    - CUBN
+    - TSPEAR
+    - WFIKKN1
+    - GCNT2
+    - CDH1
+analysis_extra:
+  max_lag_steps: 2
+  min_overlap_points: 4
+  corr_method: spearman
+  permutation_n: 1000
+  best_threshold: 0.6
+  top_pairs_plot_n: 6
+  trend_pairs:
+  - label: pluripotency_sync
+    main: POU5F1
+    sub: POU5F1
+  - label: early_epithelial_proxy
+    main: LIN28A
+    sub: CDH1
+  - label: epiblast_like_proxy
+    main: TDGF1
+    sub: CDH1
+  - label: transition_pathfinding
+    main: PRTG
+    sub: SULF1
+  - label: growthfactor_ecm_proxy
+    main: PTN
+    sub: SULF1
+  - label: neurogenesis_proxy
+    main: STMN2
+    sub: FOXG1
+  - label: neuronal_membrane_proxy
+    main: GPM6A
+    sub: ASIC2
+  - label: patterning_proxy
+    main: DLX2
+    sub: WNT3A
+  cross_modal_modules:
+    main:
+      early_pluri_main:
+      - POU5F1
+      - TDGF1
+      - LIN28A
+      - EPCAM
+      transition_main:
+      - PRTG
+      - IGFBP5
+      - PRSS23
+      - PTN
+      - CLDN6
+      - BST2
+      neuro_maturation_main:
+      - STMN2
+      - GPM6A
+      - GAP43
+      - ELAVL4
+      - MAPT
+      dorsoventral_proxy_main:
+      - DLX2
+      - ASCL1
+      - NKX2-1
+      - LHX8
+      - BCL11A
+      - ID1
+      - WNT7B
+    sub:
+      early_like_sub:
+      - POU5F1
+      - LIN28A
+      - CDH1
+      transition_like_sub:
+      - TMEM256-PLSCR3
+      - TMEM256-PLSCR3.1
+      - ROR1
+      - SULF1
+      - SCNN1A
+      neuro_like_sub:
+      - STMN2
+      - GPM6A
+      - ELAVL4
+      - FOXG1
+      - NKX2-1
+      - LHX8
+      patterning_sub:
+      - WNT3A
+      - WNT7B
+      - CUBN
+      - TSPEAR
+prior_id: ho_raw_hybrid_scanpy_temporal_v3_syncuot
+prior_gene_id_type: symbol
+prior_build_notes: V2 priors emphasize interpretable developmental phases and cross-modal
+  proxy axes for HO dense-time SyncUOT biological mechanism analysis.
+figure:
+  theme: journal
+  dpi: 260
+  marker_top_n: 8
+  cell_type_top_n: 8
+  program_top_n: 12
+  perturb_max_groups: 4
+  perturb_max_cell_types: 8

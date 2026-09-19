@@ -1,0 +1,59 @@
+# Model structure
+model:
+  multi :
+    multi_use : True
+    simu_multi_use : True
+    multi_alpha : 0.5
+    simu_map_params:
+      x_center: 2.0
+      y_center: 1.5
+      sigma_hill_A: 0.05
+      sigma_hill_B: 0.05
+  components: ['velocity', 'growth']
+  velocity_net:
+    hidden_dim: 400
+    n_layers: 2
+    residual: true
+    activation: 'leaky_relu' 
+  growth_net:
+    hidden_dim: 400
+    n_layers: 2
+    residual: false
+    activation: 'relu' 
+ckpt_dir: 'results/figure2_mofi'
+# Training plan
+training:
+  # Default parameters
+  defaults:
+    lr: 0.0001
+    batch_size: 400
+    lambda_ot_sec: 0.0
+
+  # Unbalanced OT uses a two-stage training plan
+  plan:
+    - name: "Pretrain1"
+      mode: "neural_ode"
+      method: "ODEFunc"
+      epochs: 200
+      global_mass: True
+      OT_loss: 'sinkhorn_detach'
+      lambda_ot: 1.0
+      lambda_mass: 0.1
+      lambda_energy: 0.05
+      train_strategy: "v+g"
+
+    - name: "Pretrain2"
+      lr: 0.00003
+      mode: "neural_ode"
+      method: "ODEFunc"
+      epochs: 200
+      global_mass: True
+      OT_loss: 'sinkhorn_detach'
+      lambda_ot: 1.0
+      lambda_mass: 0.02
+      lambda_energy: 0.01
+      train_strategy: "v+g"
+  # Time Point 1.0: Wasserstein-1 Distance = 0.0492
+  # Time Point 2.0: Wasserstein-1 Distance = 0.0562
+  # Time Point 3.0: Wasserstein-1 Distance = 0.0401
+  # Time Point 4.0: Wasserstein-1 Distance = 0.0697

@@ -1,0 +1,357 @@
+schema_version: 1
+release_tag: paper-data-v1
+release_base_url: https://github.com/jiantaoShen12/MOFI_tmp_tmp/releases/download/paper-data-v1
+datasets:
+  gse213152:
+    accession: GSE213152
+    files:
+      processed_rna:
+        path: paper_data/processed/gse213152/rna.h5ad
+        asset: gse213152-processed_rna.h5ad
+        bytes: 137330760
+        sha256: 604a3230c7a808058a4dd8f8451e3cc4ba06b20e840462a37ed7fc0a15270d30
+      processed_atac:
+        path: paper_data/processed/gse213152/atac.h5ad
+        asset: gse213152-processed_atac.h5ad
+        bytes: 260894527
+        sha256: e52803a5f7f00c9d5f87554c2f894c69b93a33e1abe4ac36b4e4c49baa500485
+      dynamics:
+        path: paper_data/dynamics/gse213152/adata.h5ad
+        asset: gse213152-dynamics.h5ad
+        bytes: 137354238
+        sha256: fa49fdde3a34a8244ecd9a4a099fab1b3ef37bf54c6b688c7f8afa83d2376535
+      training_config:
+        path: paper_data/dynamics/gse213152/config.yaml
+        asset: gse213152-training_config.yaml
+        bytes: 1048
+        sha256: b8122a8f9bcb115abfc900799c93fa9bf5881769c6a8761d7ee94891ca733574
+      training_map:
+        path: paper_data/maps/gse213152_training/best_model.pt
+        asset: gse213152-training_map.pt
+        bytes: 252886
+        sha256: 30b109de2e9299f5dc2f0f05e9eb9626d2d57f39a86cb1e03ac4c852aaf84d86
+      analysis_map:
+        path: paper_data/maps/gse213152_analysis/best_model.pt
+        asset: gse213152-analysis_map.pt
+        bytes: 252886
+        sha256: c47f7a34c95b21e427dcd1ac7cab0753a65e1480d20ab2a263b50e7a0c7e3f2d
+      paper_umap_primary:
+        path: paper_data/umap/gse213152/primary.pkl
+        asset: gse213152-paper_umap_primary.pkl
+        bytes: 3770512
+        sha256: ce78e7ebf8c1fe793f87b10011bd33fb6e521e3820d3e758e834a2b24ce69739
+      paper_umap_secondary:
+        path: paper_data/umap/gse213152/secondary.pkl
+        asset: gse213152-paper_umap_secondary.pkl
+        bytes: 90102267
+        sha256: cc90bbd252d34528dffe55acbe4eb27244c7e0db304e497b6d424c6217e89c14
+      paper_umap_parameters:
+        path: paper_data/umap/gse213152/parameters.json
+        asset: gse213152-paper_umap_parameters.json
+        bytes: 2016
+        sha256: a17468209eeef3b3710d18d8b2a480bf7a46dda39ec8963caee5431c1aa84bd9
+      figure3_secondary_background:
+        path: paper_data/projected/gse213152_figure3/secondary_background.npy
+        asset: gse213152-figure3_secondary_background.npy
+        bytes: 486888
+        sha256: 4c0007f484d1c87d367ef106ce5707de97603fd0bc36aac4d045b4e23e13126e
+      figure3_secondary_trajectories:
+        path: paper_data/projected/gse213152_figure3/secondary_trajectories.npy
+        asset: gse213152-figure3_secondary_trajectories.npy
+        bytes: 24208
+        sha256: b196a6a542100360e6ae1fea2dc1e2c8a3ef3f74a42b24a271cf2087498432b8
+      figure3_secondary_points:
+        path: paper_data/projected/gse213152_figure3/secondary_points.npy
+        asset: gse213152-figure3_secondary_points.npy
+        bytes: 528
+        sha256: 6bc0b7f307bea820c7e23e3ecc9a32839670dc880d64d609863d7a50ef1fefe2
+  hspc_31800:
+    accession: GSE305370 donor 31800
+    files:
+      processed_rna:
+        path: paper_data/processed/hspc_31800/rna.h5ad
+        asset: hspc_31800-processed_rna.h5ad
+        bytes: 136315519
+        sha256: 2b02db6b4bf9ea724f11b17f64e76dac25e3ac734aa308b04c951fb567645059
+      processed_protein:
+        path: paper_data/processed/hspc_31800/protein.h5ad
+        asset: hspc_31800-processed_protein.h5ad
+        bytes: 30592218
+        sha256: 60862877d6a9ae6b30014a99a6eda840c508c85253b10cb89e2998a6b245e4e2
+      dynamics:
+        path: paper_data/dynamics/hspc_31800/adata.h5ad
+        asset: hspc_31800-dynamics.h5ad
+        bytes: 26710899
+        sha256: b8bd5a6c6e1f9e08f091630ebfcead9d981092466d5b021558b34738dc13d4ae
+      paper_dynamics_original_velocity:
+        path: paper_data/dynamics/hspc_31800/adata_original_velocity.h5ad
+        asset: hspc_31800-paper_dynamics_original_velocity.h5ad
+        bytes: 26705123
+        sha256: ba09236c844e41fc24aa0a90b827300f0ec589f817aca85c89f12bd0e9c654af
+      velocity_finetuned_dynamics:
+        path: paper_data/dynamics/hspc_31800/adata_velocity_finetuned.h5ad
+        asset: hspc_31800-velocity_finetuned_dynamics.h5ad
+        bytes: 26708275
+        sha256: bb815745476551055bfc93b85bb0815aeffe662867b120c7b030ec30b419d931
+      velocity_tmap_base_dynamics:
+        path: paper_data/dynamics/hspc_31800/adata_velocity_tmap_base.h5ad
+        asset: hspc_31800-velocity_tmap_base_dynamics.h5ad
+        bytes: 26708275
+        sha256: bb815745476551055bfc93b85bb0815aeffe662867b120c7b030ec30b419d931
+      velocity_tmap_candidate_dynamics:
+        path: paper_data/dynamics/hspc_31800/adata_velocity_tmap_finetuned.h5ad
+        asset: hspc_31800-velocity_tmap_candidate_dynamics.h5ad
+        bytes: 26710899
+        sha256: b8bd5a6c6e1f9e08f091630ebfcead9d981092466d5b021558b34738dc13d4ae
+      training_config:
+        path: paper_data/dynamics/hspc_31800/config.yaml
+        asset: hspc_31800-training_config.yaml
+        bytes: 1063
+        sha256: 81f8d4ab7b0ef4886872210634e2d4260e86739d097247b6711831c62d8bc7ad
+      map:
+        path: paper_data/maps/hspc_31800/best_model.pt
+        asset: hspc_31800-map.pt
+        bytes: 548150
+        sha256: 8b26abe17d3c1119e0bee46f5d279af8c762eeeab6747ffa09cee197527536e2
+      paper_map_original:
+        path: paper_data/maps/hspc_31800/best_model_original.pt
+        asset: hspc_31800-paper_map_original.pt
+        bytes: 546262
+        sha256: d04091ca2ee962071e0b1d957f0f16c06ea65973c80d99d04e13a6cf63304d1c
+      trajectory_finetuned_map:
+        path: paper_data/maps/hspc_31800/best_model_trajectory_finetuned.pt
+        asset: hspc_31800-trajectory_finetuned_map.pt
+        bytes: 547426
+        sha256: ad5d9008e1b7516b0788475475d8188fdc79e1a4683fb75740bb00bfa2ea2fa6
+      velocity_tmap_base_map:
+        path: paper_data/maps/hspc_31800/best_model_velocity_tmap_base.pt
+        asset: hspc_31800-velocity_tmap_base_map.pt
+        bytes: 547426
+        sha256: ad5d9008e1b7516b0788475475d8188fdc79e1a4683fb75740bb00bfa2ea2fa6
+      velocity_tmap_candidate_map:
+        path: paper_data/maps/hspc_31800/best_model_velocity_tmap_finetuned.pt
+        asset: hspc_31800-velocity_tmap_candidate_map.pt
+        bytes: 548150
+        sha256: 8b26abe17d3c1119e0bee46f5d279af8c762eeeab6747ffa09cee197527536e2
+      perturb_umap_primary:
+        path: paper_data/umap/hspc_31800/perturb_primary.pkl
+        asset: hspc_31800-perturb_umap_primary.pkl
+        bytes: 33506132
+        sha256: 2f29cd7b6c4a91498964dddb47462cd902cd3d382ed714ecc30b46987cc321de
+      perturb_umap_secondary:
+        path: paper_data/umap/hspc_31800/perturb_secondary.pkl
+        asset: hspc_31800-perturb_umap_secondary.pkl
+        bytes: 32660225
+        sha256: d58e0d491b1b35f739c823b6deafe047bd05d2d5066409c83379c8bf53e9758f
+      tfrc_cd71_real_curve:
+        path: paper_data/archived/hspc_figure4/tfrc_cd71/real_curve.csv
+        asset: hspc_31800-tfrc_cd71_real_curve.csv
+        bytes: 481
+        sha256: dd6f236795a5752783eadd695fd8aa0d103f1ad54ff5ef8400b7965deeae988c
+      tfrc_cd71_z_m40:
+        path: paper_data/archived/hspc_figure4/tfrc_cd71/sim_curve__z-m40.csv
+        asset: hspc_31800-tfrc_cd71_z_m40.csv
+        bytes: 1170
+        sha256: b7c78579a5c2c7a459065822d6763bbd72b50a66f7a68e848a200398276c7eaa
+      tfrc_cd71_z_m20:
+        path: paper_data/archived/hspc_figure4/tfrc_cd71/sim_curve__z-m20.csv
+        asset: hspc_31800-tfrc_cd71_z_m20.csv
+        bytes: 1159
+        sha256: 5e6762ec57f52f9b2376809eff9238adca0557364c1553c345b9395398bb38e7
+      tfrc_cd71_z_0:
+        path: paper_data/archived/hspc_figure4/tfrc_cd71/sim_curve__z-0.csv
+        asset: hspc_31800-tfrc_cd71_z_0.csv
+        bytes: 1146
+        sha256: 2cef9bb255971dbf2076a7d2ce60c25497409531e324c4dc4c24b943cf9ade49
+      tfrc_cd71_z_20:
+        path: paper_data/archived/hspc_figure4/tfrc_cd71/sim_curve__z-20.csv
+        asset: hspc_31800-tfrc_cd71_z_20.csv
+        bytes: 1157
+        sha256: ac7dc94bbea5c85e7b30b1bd4a54e00c8b997f43fff5d9af599c044b64f093f2
+      tfrc_cd71_z_40:
+        path: paper_data/archived/hspc_figure4/tfrc_cd71/sim_curve__z-40.csv
+        asset: hspc_31800-tfrc_cd71_z_40.csv
+        bytes: 1157
+        sha256: 61235385c2cf26ab31e9f9a553cd2cb801a60d0e3541986c7aac33e31abdef4b
+      itga2b_cd41_real_curve:
+        path: paper_data/archived/hspc_figure4/itga2b_cd41/real_curve.csv
+        asset: hspc_31800-itga2b_cd41_real_curve.csv
+        bytes: 506
+        sha256: cec641084be2a980e1c4b753b3f7a7f928bd6ed800c63ae1f5504867f82f06a8
+      itga2b_cd41_z_m10:
+        path: paper_data/archived/hspc_figure4/itga2b_cd41/sim_curve__z-m10.csv
+        asset: hspc_31800-itga2b_cd41_z_m10.csv
+        bytes: 1229
+        sha256: 81e526a609a4949c522142694adadb691481e5e404968b21e21414041b13f926
+      itga2b_cd41_z_m5:
+        path: paper_data/archived/hspc_figure4/itga2b_cd41/sim_curve__z-m5.csv
+        asset: hspc_31800-itga2b_cd41_z_m5.csv
+        bytes: 1222
+        sha256: 425a92d0ba659d625b15e49c2489e4c308019f6646f5af18845241a4d22f51fc
+      itga2b_cd41_z_0:
+        path: paper_data/archived/hspc_figure4/itga2b_cd41/sim_curve__z-0.csv
+        asset: hspc_31800-itga2b_cd41_z_0.csv
+        bytes: 1212
+        sha256: c663292773efc1a446cbac323bdec1025ef8fa82c372e876e001a6e1e7047f88
+      itga2b_cd41_z_5:
+        path: paper_data/archived/hspc_figure4/itga2b_cd41/sim_curve__z-5.csv
+        asset: hspc_31800-itga2b_cd41_z_5.csv
+        bytes: 1206
+        sha256: f2101d63c62357b76b741151e1f4630ad83b057d1f2bb5ed5297db67e5980208
+      itga2b_cd41_z_10:
+        path: paper_data/archived/hspc_figure4/itga2b_cd41/sim_curve__z-10.csv
+        asset: hspc_31800-itga2b_cd41_z_10.csv
+        bytes: 1217
+        sha256: 56db6d9f8d29d0d189866b7fd127baf7a9ee60dc6d25c120d8ff8ab6a93b96cc
+  ho:
+    accession: E-MTAB-12001; E-MTAB-11998
+    label_note: Release copies correct early nepi->nect and late nect->nepi.
+    files:
+      processed_rna:
+        path: paper_data/processed/ho/rna.h5ad
+        asset: ho-processed_rna.h5ad
+        bytes: 90995800
+        sha256: 926ba771805bb7dbde0b07180e685b3d6cf7094ff03f6f358ac73f37f1848650
+      processed_atac:
+        path: paper_data/processed/ho/atac.h5ad
+        asset: ho-processed_atac.h5ad
+        bytes: 90949413
+        sha256: 3e5b34a9ff7ee8dc7343377b52dad0704acaa757e7762a56aeef0303fec073f9
+      dynamics:
+        path: paper_data/dynamics/ho/adata.h5ad
+        asset: ho-dynamics.h5ad
+        bytes: 13016078
+        sha256: b19f8fa559704540edf242fe66c247a5ac7790e3a5a8f8d27e96e670593c7643
+      training_config:
+        path: paper_data/dynamics/ho/config.yaml
+        asset: ho-training_config.yaml
+        bytes: 1036
+        sha256: dc2a7d58c21d726c194ebdf9813d363c11872a29a224acc5ba5b4450a4445885
+      map:
+        path: paper_data/maps/ho/best_model.pt
+        asset: ho-map.pt
+        bytes: 252886
+        sha256: 16cbf2b37cf866957a22941fb79ecac95f056c05a0af7b76033b0599c60d886b
+      paper_umap_primary:
+        path: paper_data/umap/ho/primary.pkl
+        asset: ho-paper_umap_primary.pkl
+        bytes: 19537863
+        sha256: 8c19e7bcdf8a8d8ff33f7860733bf3253b5d09629c054a1d4b653e2f5c0ea190
+      paper_umap_secondary:
+        path: paper_data/umap/ho/secondary.pkl
+        asset: ho-paper_umap_secondary.pkl
+        bytes: 11886902
+        sha256: 0448321566f69740885899d1a24ac0d7027169ef7774d1fa173123a2e96e2d5c
+      figure5_primary_background:
+        path: paper_data/projected/ho_figure5/primary_background.npy
+        asset: ho-figure5_primary_background.npy
+        bytes: 79280
+        sha256: 1e4c47c45c9c30460b1592e4b52a78c5f8e8666d7ef416a386be01c781ae6f56
+      figure5_primary_trajectories:
+        path: paper_data/projected/ho_figure5/primary_trajectories.npy
+        asset: ho-figure5_primary_trajectories.npy
+        bytes: 19328
+        sha256: 52891f2504f49860a1e89bf565bb143e2bb143f29899d0b985edd0c9cf5482c5
+      figure5_primary_points:
+        path: paper_data/projected/ho_figure5/primary_points.npy
+        asset: ho-figure5_primary_points.npy
+        bytes: 608
+        sha256: 118dcbe207a522e80328d8e216d0d3f7d4b3a727479c9beb86ac2dace8b0cf0a
+      figure5_primary_trajectories_raw:
+        path: paper_data/projected/ho_figure5/primary_trajectories_raw.npy
+        asset: ho-figure5_primary_trajectories_raw.npy
+        bytes: 480128
+        sha256: 594fa3f38ea212198558243f4ff3120f3d5566f4c0eb678e40674abb9f4481ea
+      figure5_primary_points_raw:
+        path: paper_data/projected/ho_figure5/primary_points_raw.npy
+        asset: ho-figure5_primary_points_raw.npy
+        bytes: 12128
+        sha256: 06fe521c882da7adc76696c84795bdb14badf4695d781f400985a283b9393d1a
+      figure5_primary_trajectories_original:
+        path: paper_data/projected/ho_figure5/primary_trajectories_original.npy
+        asset: ho-figure5_primary_trajectories_original.npy
+        bytes: 19328
+        sha256: 8735ceac25e2bfef65edd7637797db3c3fe8fdbeced1dfb5ba6c9e862754be91
+      figure5_primary_points_original:
+        path: paper_data/projected/ho_figure5/primary_points_original.npy
+        asset: ho-figure5_primary_points_original.npy
+        bytes: 608
+        sha256: 16e78cd353d5e72849c869c81066fa0ac62546f327410d852090d928dc3ee36c
+      figure5_secondary_background:
+        path: paper_data/projected/ho_figure5/secondary_background.npy
+        asset: ho-figure5_secondary_background.npy
+        bytes: 79280
+        sha256: ebbb1b0a4cd7d5d2946e978688c19f53c83f0479ba35f53eeb831619aff1bd18
+      figure5_secondary_trajectories:
+        path: paper_data/projected/ho_figure5/secondary_trajectories.npy
+        asset: ho-figure5_secondary_trajectories.npy
+        bytes: 19328
+        sha256: 6abfb7afbeee1411b00fc97f2113ed706b035bd7684eb4afa35566784d1a3242
+      figure5_secondary_points:
+        path: paper_data/projected/ho_figure5/secondary_points.npy
+        asset: ho-figure5_secondary_points.npy
+        bytes: 608
+        sha256: 691e0f5c9695a69e098aae70fbfc7a0a0f44e23d5ce8b887171f8be4840cb3b4
+      figure5_sampling_manifest:
+        path: paper_data/projected/ho_figure5/sampling_manifest.json
+        asset: ho-figure5_sampling_manifest.json
+        bytes: 577
+        sha256: 1cee231d313edf5721781b952e657abee4b3e01d00fc7c48e8835ae7a6a8c133
+      figure5_de_rna:
+        path: paper_data/archived/ho_figure5/de_main_var_path_wilcoxon.csv
+        asset: ho-figure5_de_rna.csv
+        bytes: 334152
+        sha256: df7356c9e328d3ac26824053594dde58691ceee3d2361e385f495bc31b011c46
+      figure5_de_atac:
+        path: paper_data/archived/ho_figure5/de_sec_var_path_wilcoxon.csv
+        asset: ho-figure5_de_atac.csv
+        bytes: 311983
+        sha256: 8809236fe842efbe1b89fd5816db8a8d4a1796a562f01d66de3997bc7a054cb3
+      figure5_rna_trajectory_original_pdf:
+        path: paper_data/archived/ho_figure5/ode_trajectories_v2_original.pdf
+        asset: ho-figure5_rna_trajectory_original_pdf.pdf
+        bytes: 653645
+        sha256: 5eb3fedc09eaace7fc97fab1297be35dedd9119c6aca5cd27416161ec4bed7a4
+      figure5_rna_trajectory_original_png:
+        path: paper_data/archived/ho_figure5/ode_trajectories_v2_original.png
+        asset: ho-figure5_rna_trajectory_original_png.png
+        bytes: 420347
+        sha256: 21b7e8a5991bd28f6a3ce798d2c72e9f7372baa8d747b9b97ac3e0518a1b16c3
+  hc_author5:
+    accession: GSE204684
+    files:
+      processed_rna:
+        path: paper_data/processed/hc_author5/rna.h5ad
+        asset: hc_author5-processed_rna.h5ad
+        bytes: 54497450
+        sha256: a2b82e4bdac860c085679fcf219c5a706c8e8627ec676eb352d7798b089db2dd
+      processed_atac:
+        path: paper_data/processed/hc_author5/atac.h5ad
+        asset: hc_author5-processed_atac.h5ad
+        bytes: 54497450
+        sha256: 454056b3172a7da72a8547ce6930827936dfdf0440b60d60469f51e6bd54e62d
+      dynamics:
+        path: paper_data/dynamics/hc_author5/adata.h5ad
+        asset: hc_author5-dynamics.h5ad
+        bytes: 57143110
+        sha256: 07c3d065b6c5ab2ddcfeecebbbf017550e4c8da0965cf56238fc93474ab7d231
+      training_config:
+        path: paper_data/dynamics/hc_author5/config.yaml
+        asset: hc_author5-training_config.yaml
+        bytes: 1252
+        sha256: c041f72eb839fa9d21f3557d2aae8904bd96ede57079bf63f577d386542ed6af
+      map:
+        path: paper_data/maps/hc_author5/best_model.pt
+        asset: hc_author5-map.pt
+        bytes: 252886
+        sha256: 0bdd3db9dd562ca6308fa89a865e5d4eb88405fcc2741d188184d5cce036cb3c
+      erbb4_umap_primary:
+        path: paper_data/umap/hc_author5/erbb4_primary.pkl
+        asset: hc_author5-erbb4_umap_primary.pkl
+        bytes: 11474532
+        sha256: 908999b4561b180a1dad95e49ef3ff913ad72e31ce985e2be6626512db7639da
+      erbb4_umap_secondary:
+        path: paper_data/umap/hc_author5/erbb4_secondary.pkl
+        asset: hc_author5-erbb4_umap_secondary.pkl
+        bytes: 11174988
+        sha256: 5a466a51772692a60570bbd0a439928b8a385744a3115ed28c92457bdeabe1a1

@@ -1,0 +1,79 @@
+# 训练模型
+python train_latent_translator.py \
+    --rna_adata rna_data.h5ad \
+    --protein_adata protein_data.h5ad \
+    --latent_key X_latent \
+    --outdir ./output \
+    --hidden_dim 64 \
+    --shared_dim 32 \
+    --lr 0.001 \
+    --batch_size 128 \
+    --epochs 200 \
+    --early_stop 20 \
+    --device 0
+
+
+    
+• 修改代码规划报告（先规划，不改代码）
+
+  1. 结论（基于论文+moscot）
+
+  - 可以做你要的“空间坐标-转录组”映射：moscot 的 MappingProblem 本质是 OT/FGW coupling，可用于单向映射（如
+    transcriptome→spatial 或 spatial→transcriptome），并支持 push/pull/impute 这类方向性映射。
+  - 能做“梯度相关量”，但实现方式要区分：
+      - moscot 原生给的是 coupling/推送，不是现成 PyTorch 神经网络 T(x)。
+      - 为兼容你现有 energy_Secondary/grad_T 接口，需要在项目内封装一个“可微近似映射层”（基于 coupling 的重心映射
+        + 局部线性/Jacobian 近似）。
+  - 不影响原功能可做到：通过新增可选 mapper_type，默认仍走旧 TransportMap（自编码器）。
+
+  参考：
+
+  - Nature 论文：https://www.nature.com/articles/s41586-024-08453-2
+  - moscot 仓库：https://github.com/theislab/moscot
+  - moscot Mapping 教程/API：https://moscot.readthedocs.io/en/latest/notebooks/tutorials/300_mapping.html
+
+  2. 现状代码切入点
+
+  - 现有映射实现与梯度接口在 Mongemap.py:12。
+  - 动力学训练里硬编码了 TransportMap 构造和 tranmap.model.train/eval，在 trainer.py:39 和 trainer.py:141。
+  - pipeline 多处直接 new TransportMap，在 run_pipeline.py:397、run_pipeline.py:737、run_pipeline.py:790。
+  - 你现在的下游 tl 主要依赖接口是 T/T_rev/grad_T/sec_vecolity/energy_Secondary，在 analysis.py:6 和
+    methods.py:76。
+
+  3. 拟改动方案（分阶段）
+
+  - 阶段A（兼容层，零破坏）
+      - 新增 TransportMap 工厂与统一接口协议（不改旧类行为）。
+      - mapper_type 默认 ae，所以历史配置不变。
+  - 阶段B（新增 moscot 映射器）
+      - 新增 MoscotTransportMap（文件新建），提供：
+          - 单向 T
+          - grad_T（局部可微近似）
+          - sec_vecolity、energy_Secondary
+          - T_rev 仅在可逆配置下启用，否则显式报错（避免 silent wrong）
+  - 阶段C（接入 trainer/pipeline）
+      - trainer 从配置读取 mapper_type 并构建对应 mapper。
+      - 若 mapper 不支持 update_transport，自动降级为 eval 并警告（不影响训练主流程）。
+      - pipeline 里把 TransportMap(...) 改为统一构建函数。
+  - 阶段D（配置与示例）
+      - 在 model.multi 下新增可选字段：
+          - mapper_type: ae|moscot（默认 ae）
+          - moscot.* 参数组（路径、spatial key、正则、方向等）
+      - 追加一份 axolotl 配置样例，不改你现有 yaml。
+
+  4. 风险与控制
+
+  - 当前环境未安装 moscot/jax/ott（已检查）。
+  - 控制策略：
+      - moscot 采用“惰性导入”，只有 mapper_type=moscot 才要求安装；
+      - 默认路径仍是 AE，不影响原 map 与 dynamic 两条训练线；
+      - 对 cycle_OT 这类需要 T_rev 的场景加能力检查，避免运行时错误传播。
+
+  5. 验收标准
+
+  - 旧配置（mapper_type 不填）结果与当前一致（功能回归通过）。
+  - 新配置可在单向模式跑通 T + energy_Secondary。
+  - tl 下游依赖映射的函数可直接复用，不改调用代码。
+  - 失败时错误信息明确（缺依赖/不支持反向映射）。
+
+  如果你确认这个规划，我下一步就按“阶段A+B”先提交第一版代码改动。

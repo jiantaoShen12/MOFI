@@ -1,0 +1,32 @@
+{
+  "name": "figure2_simulation",
+  "seed": 42,
+  "dt": 0.1,
+  "simulation_time_points": [
+    0,
+    6,
+    12,
+    18,
+    24
+  ],
+  "saved_time_divisor": 8,
+  "monge_map": {
+    "x_center": 2.0,
+    "y_center": 1.5,
+    "sigma_hill_A": 0.05,
+    "sigma_hill_B": 0.05,
+    "sigma_D": 0
+  },
+  "columns": {
+    "primary": [
+      "x1",
+      "x2"
+    ],
+    "secondary_joint": [
+      "x1",
+      "x2",
+      "x4"
+    ],
+    "derived_secondary": "x4"
+  }
+}

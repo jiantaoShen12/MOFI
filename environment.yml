@@ -1,0 +1,35 @@
+name: mofi
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pytorch>=2.0
+  - torchvision
+  - torchaudio
+  - pytorch-cuda=11.8
+  - numpy<2
+  - scipy
+  - pandas
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - scanpy
+  - anndata
+  - h5py
+  - umap-learn
+  - pyyaml
+  - jupyterlab
+  - pip:
+      - torchdiffeq
+      - torchsde
+      - pot
+      - phate
+      - geomloss
+      - scvelo
+      - plotly==5.24.1
+      - kaleido==0.2.1
+      - nbformat>=5.10,<6
+      - nbclient>=0.10,<1

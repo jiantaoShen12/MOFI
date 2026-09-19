@@ -1,0 +1,73 @@
+perturb_pipeline:
+  batch_mode: true
+  perturb_domain: secondary
+  aggregation_method: raw_mean
+  source_pool_mode: time0_random
+  selection_mode: time0
+  sample_n: all
+  seed: 42
+  device: cpu
+  perturb_scores: [0, 5, 10, -5, -10]
+
+  fate_heatmap:
+    enabled: false
+    z_order: [0]
+
+  fate_sweep:
+    enabled: false
+    source_mode: random
+    indices_csv: ""
+    sample_n: all
+    seed: 42
+
+  perturb_tasks:
+    - task_id: a_itga2b_cd41
+      tier: A
+      label: ITGA2B->CD41
+      primary_vars: [ITGA2B]
+      secondary_vars: [CD41]
+    - task_id: a_tfrc_cd71
+      tier: A
+      label: TFRC->CD71
+      primary_vars: [TFRC]
+      secondary_vars: [CD71]
+    - task_id: b_klf1_ery_markers
+      tier: B
+      label: KLF1->(CD71,CD235a)
+      primary_vars: [KLF1]
+      secondary_vars: [CD71, CD235a]
+    - task_id: b_gata1_ery_markers
+      tier: B
+      label: GATA1->(CD71,CD36,CD235a)
+      primary_vars: [GATA1]
+      secondary_vars: [CD71, CD36, CD235a]
+    - task_id: b_gata1_mk_markers
+      tier: B
+      label: GATA1->(CD41,CD42b)
+      primary_vars: [GATA1]
+      secondary_vars: [CD41, CD42b]
+    - task_id: b_gp1ba_cd42b
+      tier: B
+      label: GP1BA->CD42b
+      primary_vars: [GP1BA]
+      secondary_vars: [CD42b]
+    - task_id: b_itga2b_gp1ba_mk_phenotype
+      tier: B
+      label: (ITGA2B,GP1BA)->(CD41,CD42b)
+      primary_vars: [ITGA2B, GP1BA]
+      secondary_vars: [CD41, CD42b]
+    - task_id: c_mpo_mkery
+      tier: C
+      label: MPO->(CD71,CD41,CD42b)
+      primary_vars: [MPO]
+      secondary_vars: [CD71, CD41, CD42b]
+    - task_id: c_lyz_mkery
+      tier: C
+      label: LYZ->(CD71,CD41,CD42b)
+      primary_vars: [LYZ]
+      secondary_vars: [CD71, CD41, CD42b]
+    - task_id: c_mpo_lyz_mkery
+      tier: C
+      label: (MPO,LYZ)->(CD71,CD41,CD42b)
+      primary_vars: [MPO, LYZ]
+      secondary_vars: [CD71, CD41, CD42b]

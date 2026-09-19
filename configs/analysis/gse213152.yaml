@@ -1,0 +1,111 @@
+paths:
+  dynamic_adata: paper_data/dynamics/gse213152/adata.h5ad
+  main_processed: paper_data/processed/gse213152/rna.h5ad
+  sub_processed: paper_data/processed/gse213152/atac.h5ad
+  map_model_path: paper_data/maps/gse213152_analysis/best_model.pt
+output:
+  root_dir: results/gse213152
+inference:
+  device: cpu
+  seed: 42
+  dt: 0.05
+  init_time: 0.0
+  mapper_type: ae
+  mapper_kwargs: {}
+  sample_max_cells: 10000
+  time_grid_presets:
+    coarse_dense: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4.0]
+  passes: [sample]
+  run_grids:
+    - mode: coarse_dense
+analysis:
+  time_key: time_point_processed
+  cell_type_key: cell_type_fine
+  decode_mode: pca_projection
+  classifier:
+    type: linear
+    max_iter: 1200
+    train_space: joint
+  path_definition:
+    target_cell_type: PT
+  main_var_markers: [SIX2, EYA1, CITED1, MEOX1, HNF1B, EPCAM, CDH1, KRT8, KRT18, JAG1, PAX8, NPHS1, NPHS2, PODXL, WT1, MAFB, PTPRO, HNF4A, LRP2, SLC34A1, SLC5A2, SLC3A1, CUBN, AQP1, SLC12A1, UMOD, CLDN10, FXYD2, TFAP2B, CALB1]
+  sec_var_markers: [SIX2, EYA1, CITED1, MEOX1, HNF1B, EPCAM, CDH1, KRT8, KRT18, JAG1, PAX8, NPHS1, NPHS2, PODXL, WT1, MAFB, PTPRO, HNF4A, LRP2, SLC34A1, SLC5A2, SLC3A1, CUBN, AQP1, SLC12A1, UMOD, CLDN10, FXYD2, TFAP2B, CALB1]
+  programs:
+    nephron_progenitor: [SIX2, EYA1, CITED1, MEOX1, SALL1, WT1]
+    podocyte_branch: [WT1, MAFB, NPHS1, NPHS2, PODXL, PTPRO]
+    developing_tubule: [HNF1B, EPCAM, CDH1, KRT8, KRT18, JAG1, PAX8]
+    proximal_tubule: [HNF4A, LRP2, SLC34A1, SLC5A2, SLC3A1, CUBN, AQP1]
+    loh_distal_nephron: [SLC12A1, UMOD, CLDN10, FXYD2, TFAP2B, CALB1]
+  programs_sec:
+    nephron_progenitor: [SIX2, EYA1, CITED1, MEOX1, SALL1, WT1]
+    podocyte_branch: [WT1, MAFB, NPHS1, NPHS2, PODXL, PTPRO]
+    developing_tubule: [HNF1B, EPCAM, CDH1, KRT8, KRT18, JAG1, PAX8]
+    proximal_tubule: [HNF4A, LRP2, SLC34A1, SLC5A2, SLC3A1, CUBN, AQP1]
+    loh_distal_nephron: [SLC12A1, UMOD, CLDN10, FXYD2, TFAP2B, CALB1]
+  prior_targets: [SIX2, EYA1, CITED1, MEOX1, SALL1, WT1, HNF1B, EPCAM, CDH1, KRT8, KRT18, JAG1, PAX8, NPHS1, NPHS2, PODXL, MAFB, PTPRO, HNF4A, LRP2, SLC34A1, SLC5A2, SLC3A1, CUBN, AQP1, SLC12A1, UMOD, CLDN10, FXYD2, TFAP2B, CALB1]
+  jacobian_grn:
+    max_cells: 64
+    top_k: 24
+    seed: 42
+    include_hessian_term: true
+    hessian_eps: 0.001
+    mapper_batch_size: 128
+    time_points: [0, 1, 2, 3, 4]
+    main_var_features: [SIX2, EYA1, HNF1B, EPCAM, NPHS1, NPHS2, PODXL, WT1, MAFB, LRP2, SLC34A1, SLC12A1, TFAP2B, CALB1]
+    sec_var_features: [SIX2, EYA1, HNF1B, EPCAM, NPHS1, NPHS2, PODXL, WT1, MAFB, LRP2, SLC34A1, SLC12A1, TFAP2B, CALB1]
+  perturbation:
+    dt: 0.05
+    device: cpu
+    target_cell_type: PT
+    target_groups:
+      - name: nephron_progenitor
+        genes: [SIX2, EYA1, CITED1]
+      - name: podocyte_branch
+        genes: [WT1, MAFB, NPHS1, NPHS2]
+      - name: developing_tubule
+        genes: [HNF1B, PAX8, JAG1, EPCAM]
+      - name: proximal_tubule
+        genes: [HNF4A, LRP2, SLC34A1, SLC5A2]
+      - name: loh_distal_nephron
+        genes: [SLC12A1, UMOD, TFAP2B, CALB1]
+    z_scores: [-1.0, 1.0]
+    focus_curve_scores: [-1.0, 1.0]
+    sweep_cell_types: [Nephron_progenitor, dev, POD, PT, LOH_DN]
+    focus_curve_cell_types: [Nephron_progenitor, dev, POD, PT, LOH_DN]
+    missing_target_policy: zero
+  key_molecule:
+    path_quantile: 0.75
+    fdr_alpha: 0.05
+    min_abs_log2fc: 0.25
+    min_pct: 0.1
+    top_k: 40
+    min_time_hits: 2
+    main_var_panel: [SIX2, EYA1, CITED1, MEOX1, HNF1B, EPCAM, CDH1, KRT18, NPHS1, NPHS2, PODXL, WT1, MAFB, PTPRO, HNF4A, LRP2, SLC34A1, SLC5A2, SLC12A1, UMOD, TFAP2B, CALB1]
+    sec_var_panel: [SIX2, EYA1, CITED1, MEOX1, HNF1B, EPCAM, CDH1, KRT18, NPHS1, NPHS2, PODXL, WT1, MAFB, PTPRO, HNF4A, LRP2, SLC34A1, SLC5A2, SLC12A1, UMOD, TFAP2B, CALB1]
+figure:
+  theme: journal
+  dpi: 260
+  marker_top_n: 12
+  cell_type_top_n: 5
+  cell_type_exclude: []
+  program_top_n: 10
+  perturb_max_groups: 5
+  perturb_max_cell_types: 5
+  perturb_curve_scores: [-1.0, 1.0]
+  perturb_curve_cell_types: [Nephron_progenitor, dev, POD, PT, LOH_DN]
+  trajectory_projection: umap
+  primary_modality_label: RNA
+  secondary_modality_label: ATAC
+  trajectory_umap_n_neighbors: 120
+  trajectory_umap_min_dist: 0.5
+  trajectory_umap_metric: euclidean
+  trajectory_umap_random_state: 42
+  trajectory_plot_max_cells: 1000
+  trajectory_umap_fit_max_points: 10000
+auto_meta:
+  dataset: gse213152
+  selected_direction: '12'
+  dynamic_mode: [1, 2]
+  primary_domain: 1
+  secondary_domain: 2
+  biological_story: PIM/NM-rooted nephron trajectory with POD and tubule branches; current data resolves NP, POD, dev, PT, and LOH_DN.

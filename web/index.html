@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MOFI — Multi-omics Fate Inference</title>
+  <meta name="description" content="MOFI: synchronized multi-omics trajectory dynamics for cell fate inference." />
+  <link rel="icon" href="assets/logo.jpg" />
+  <link rel="stylesheet" href="style.css?v=20260909-web-folder" />
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar" id="topbar">
+    <a class="brand" href="#top">
+      <img class="brand-logo" src="assets/logo.jpg" alt="MOFI logo" />
+      <span><b>MOFI</b><small>Multi-omics fate inference</small></span>
+    </a>
+    <nav class="nav">
+      <a href="#top">Overview</a>
+      <a href="#demos">Interactive</a>
+      <a href="#highlights">Highlights</a>
+      <a href="#downstream">Downstream</a>
+      <a href="#figures">Figures</a>
+      <a href="#code">Code & notebooks</a>
+    </nav>
+    <a class="nav-cta" href="#demos">Explore interactive results</a>
+  </header>
+
+  <main id="top">
+
+    <!-- ─── HERO ──────────────────────────────────────────────────────── -->
+    <section class="hero">
+      <div class="hero-bg-bubbles"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="hero-content">
+        <div class="eyebrow"><i></i>Multi-omics · Cell fate · Trajectory dynamics · Synchronized integration</div>
+        <div class="hero-title-row">
+          <figure class="hero-title-figure">
+            <img src="assets/Figure1.png" alt="MOFI framework overview" />
+            <figcaption>
+              <details class="figure-caption">
+                <summary>Figure 1: MOFI reconstructs continuous multi-omics dynamic fate trajectories</summary>
+                <div class="caption-body">
+                  <p><span class="caption-label">(A) Discrete time-series multi-omics snapshots.</span> Paired multi-omics data (e.g., RNA expression and chromatin accessibility/protein levels) collected at discrete time points {t} are represented as paired observations within a joint state space (<b>x</b>×<b>y</b> ∈ ℝ<sup>d<sub>RNA</sub></sup> × ℝ<sup>d<sub>sec</sub></sup>). MOFI infers the continuous-time evolution of cell populations across different omics between these snapshots.</p>
+                  <p><span class="caption-label">(B) Synchronized multi-omics developmental landscapes.</span> The landscape illustrates the differentiation and proliferation of progenitor cells into distinct terminal fates (α and β) within different omics spaces. The overview captures both shared fate transition processes and omics-specific expression paths.</p>
+                  <p><span class="caption-label">(C) Model Components.</span> MOFI decomposes the developmental process into interpretable components: (i) a bi-directional cross-omics mapping function <b>T</b> that enables transitions between and within Omics 1 and Omics 2; (ii) two intrinsic drift fields encoding cell-autonomous state changes, where one omics is modeled by a neural network <b>V</b><sub>1</sub>(<b>x</b>, t) and the other <b>V</b><sub>2</sub>(<b>y</b>, t) is derived via <b>T</b> and <b>V</b><sub>1</sub>; and (iii) an unbalanced growth field g(<b>x</b>, t) that models cell proliferation and apoptosis. By integrating multi-omics knowledge, MOFI generates omics-specific velocity components and growth rates.</p>
+                </div>
+              </details>
+            </figcaption>
+          </figure>
+          <div class="hero-title-copy">
+            <div class="hero-text-body">
+              <h1>Multi-Omics<br><span>Dynamical Integration</span></h1>
+              <p class="hero-lede">MOFI, a dynamically constrained multi-omics integration framework, leverages time-series single-cell multi-omics data encompassing transcriptomic, chromatin and proteomic profiles to reconstruct multi-omics dynamics, transformation mechanisms and scilo-perturbation, with demonstrated superior performance.</p>
+              <div class="hero-actions">
+                <a class="button primary" href="#demos">Explore interactive results</a>
+                <a class="button ghost" href="#figures">View paper figures</a>
+              </div>
+              <div class="hero-bottom-area">
+                <div class="hero-tags">
+                  <span>Multi-Omics Dynamic Integration</span>
+                  <span>Cell Fate-Proliferation Dynamics</span>
+                  <span>Multi-Omics-Driven Dynamic Biological Discovery</span>
+                </div>
+                <div class="hero-logo-area">
+                  <div class="hero-logo-text">
+                    <span class="logo-label">MOFI</span>
+                    <span class="logo-sublabel">Framework</span>
+                  </div>
+                  <div class="hero-logo-banner">
+                    <img class="hero-logo-full" src="assets/logo.jpg" alt="MOFI logo" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         INTERACTIVE DEMOS
+         ══════════════════════════════════════════════════════════════════ -->
+    <section class="section-pad demos" id="demos">
+      <div class="section-head narrow">
+        <p class="kicker">Interactive demos</p>
+        <h2>Explore MOFI dynamics with compact browser demos.</h2>
+        <p>Interactively explore MOFI-inferred synchronized multi-omics trajectories and cross-omics transformation programs.</p>
+        <p class="demo-disclaimer"><strong>Demo assets only.</strong> These compact sampled and illustrative JSON files support browser interaction; they are not the complete manuscript datasets. The full paper-data release is documented in <a href="../README.md">README.md</a>.</p>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="tab-switcher">
+        <button class="tab-btn active" data-tab="simu"><span class="tab-icon">◆</span> Simulation</button>
+        <button class="tab-btn" data-tab="kidney"><span class="tab-icon">◈</span> Kidney Organoid</button>
+      </div>
+
+      <!-- ─── SIMULATION TAB ────────────────────────────────────────── -->
+      <article class="demo-card" id="demo-simu">
+        <div class="demo-panel-heading">
+          <p class="card-label">Simulation demo · compact browser asset</p>
+          <div class="demo-controls">
+            <button class="ctrl-btn" id="simu-play-btn">▶</button>
+            <input type="range" id="simu-slider" min="0" max="4" step="0.01" value="0" />
+            <button class="ctrl-btn speed-btn" id="simu-speed-btn" title="Toggle speed">1×</button>
+            <span class="time-chip" id="simu-time-label">t = 0</span>
+          </div>
+        </div>
+        <div class="simu-canvas-wrap">
+          <div class="simu-panel">
+            <div class="panel-title">Omics-1 View</div>
+            <div id="simu-canvas-1" class="three-container"></div>
+          </div>
+          <div class="simu-panel">
+            <div class="panel-title">Omics-2 View</div>
+            <div id="simu-canvas-2" class="three-container"></div>
+          </div>
+          <div class="simu-legend">
+            <div class="legend-title">Time</div>
+            <div class="legend-gradient">
+              <div class="gradient-bar simu-gradient-bar"></div>
+              <div class="gradient-labels"><span>t=0</span><span>t=2</span><span>t=4</span></div>
+            </div>
+          </div>
+          <div class="simu-info" id="simu-info">
+            <div class="info-row"><span class="info-label">Cells</span><span class="info-value" id="simu-cell-count">—</span></div>
+            <div class="info-row"><span class="info-label">Trajectories</span><span class="info-value" id="simu-traj-count">—</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─── KIDNEY ORGANOID TAB ────────────────────────────────────── -->
+      <article class="demo-card" id="demo-kidney" style="display:none;">
+        <div class="demo-panel-heading">
+          <p class="card-label">Kidney organoid demo · sampled RNA ↔ ATAC asset</p>
+          <div class="demo-controls">
+            <button class="ctrl-btn" id="kidney-play-btn">▶</button>
+            <input type="range" id="kidney-slider" min="0" max="4" step="0.01" value="0" />
+            <button class="ctrl-btn speed-btn" id="kidney-speed-btn" title="Toggle speed">1×</button>
+            <span class="time-chip" id="kidney-time-label">Day 7</span>
+            <span class="time-chip phase" id="kidney-time-phase">Day 7 → Day 12</span>
+          </div>
+        </div>
+        <div class="kidney-controls-row">
+          <div class="fate-selector">
+            <span class="fate-label">Final Fate:</span>
+            <button class="fate-btn active" data-fate="mixed">Random</button>
+            <button class="fate-btn" data-fate="NPC">NPC</button>
+            <button class="fate-btn" data-fate="dev">dev</button>
+            <button class="fate-btn" data-fate="LOH_DN">LOH DN</button>
+            <button class="fate-btn" data-fate="PT">PT</button>
+            <button class="fate-btn" data-fate="POD">POD</button>
+          </div>
+          <div class="count-control">
+            <span class="count-label">Trajectories:</span>
+            <input type="range" id="kidney-count-slider" min="5" max="100" step="1" value="40" />
+            <span class="count-value" id="kidney-count-value">40</span>
+          </div>
+        </div>
+        <div class="kidney-canvas-wrap">
+          <div class="kidney-panel">
+            <div class="panel-title">RNA Omics</div>
+            <canvas id="kidney-rna-canvas" width="500" height="500"></canvas>
+          </div>
+          <div class="kidney-panel">
+            <div class="panel-title">ATAC Omics</div>
+            <canvas id="kidney-atac-canvas" width="500" height="500"></canvas>
+          </div>
+        </div>
+        <div class="kidney-bottom">
+          <div class="kidney-legend">
+            <div class="legend-title">Cell type</div>
+            <div class="legend-items" id="kidney-legend-items"></div>
+          </div>
+          <div class="kidney-info">
+            <div class="info-row"><span class="info-label">Time</span><span class="info-value" id="kidney-time-info">Day 7</span></div>
+            <div class="info-row"><span class="info-label">Trajectories</span><span class="info-value" id="kidney-traj-count">40</span></div>
+          </div>
+          <div class="kidney-proportions">
+            <canvas id="proportions-canvas" width="700" height="220"></canvas>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─── TF UMAP INTERACTIVE ───────────────────────────────────── -->
+      <article class="demo-card" id="demo-tf-umap" style="margin-top:24px;">
+        <div class="demo-panel-heading">
+          <p class="card-label">Cross-omics transformation demo · compact browser asset</p>
+          <p class="card-sublabel">Hover over a point to see its variable name. Default: RNASE3 (RNA) and CD49d (Protein).</p>
+        </div>
+        <div class="tf-umap-wrap">
+          <div class="tf-umap-panel">
+            <div class="panel-title">RNA-to-protein transformation pattern programs</div>
+            <canvas id="tf-rna-canvas" width="450" height="400"></canvas>
+            <div class="tf-umap-bio">
+              <p><strong>Left panel:</strong> Genes ranked by predicted impact on protein responses. <strong>RNASE3</strong> — mast-cell gene enriched in NF-κB/MAPK pathways, key regulator of mast cell specification.</p>
+            </div>
+          </div>
+          <div class="tf-umap-label-area" id="tf-label-area">
+            <div class="tf-label-rna" id="tf-label-rna">
+              <span class="tf-label-arrow">←</span> RNASE3
+            </div>
+            <div class="tf-label-divider"></div>
+            <div class="tf-label-sub" id="tf-label-sub">
+              CD49d <span class="tf-label-arrow">→</span>
+            </div>
+          </div>
+          <div class="tf-umap-panel">
+            <div class="panel-title">Protein-to-RNA transformation pattern programs</div>
+            <canvas id="tf-sub-canvas" width="450" height="400"></canvas>
+            <div class="tf-umap-bio">
+              <p><strong>Right panel:</strong> Proteins ranked by predicted impact on transcriptomic states. <strong>CD49d</strong> (ITGA4) — forms α4β7 integrin for mast cell progenitor homing and maturation.</p>
+            </div>
+          </div>
+        </div>
+        <div class="tf-umap-legend">
+          <div class="legend-title">Color meaning</div>
+          <div class="tf-legend-gradient">
+            <div class="gradient-bar tf-gradient-bar"></div>
+            <div class="gradient-labels">
+              <span>Higher influence</span>
+              <span>Lower influence</span>
+            </div>
+          </div>
+          <p class="tf-legend-note">Colors represent 10 clusters ranked by cross-omics transformation strength. Darker colors = stronger influence.</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ─── HIGHLIGHTS ────────────────────────────────────────────────── -->
+    <section class="section-pad highlights" id="highlights">
+      <div class="section-head narrow">
+        <p class="kicker">Highlights</p>
+        <h2>From multi-omics snapshots to Dynamical Integration.</h2>
+        <p>MOFI integrates time-series multi-omics data under developmental constraints, enabling synchronized fate inference, proliferation modeling, and cross-omics mechanisms analysis within a unified framework.</p>
+      </div>
+      <div class="overview-grid highlights-grid">
+        <article class="concept-card highlight-card">
+          <span class="highlight-index">01</span>
+          <div class="icon"><img src="assets/icon-integration.svg" alt="" /></div>
+          <h3>Dynamically Constrained Multi-Omics Integration</h3>
+          <p>Joint modeling of transcriptomic, chromatin and proteomic dynamics via a unified dynamically constrained multi-omics integration framework.</p>
+        </article>
+        <article class="concept-card highlight-card">
+          <span class="highlight-index">02</span>
+          <div class="icon"><img src="assets/icon-fate.svg" alt="" /></div>
+          <h3>Proliferation and Cell Dynamic Fate Inference</h3>
+          <p>Predicting cell proliferation and death alongside coordinated fate transitions across transcriptomic, chromatin and protein omics layers.</p>
+        </article>
+        <article class="concept-card highlight-card">
+          <span class="highlight-index">03</span>
+          <div class="icon"><img src="assets/icon-mechanism.svg" alt="" /></div>
+          <h3>Multi-Omics-Driven Dynamic Biological Discovery</h3>
+          <p>Predicting perturbation-responsive fate redistribution and discovering coordinated transformation dynamics across omics.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ─── DOWNSTREAM ANALYSIS ──────────────────────────────────────── -->
+    <section class="section-pad downstream" id="downstream">
+      <div class="section-head narrow">
+        <p class="kicker">Downstream Analysis</p>
+        <h2>Inter-Omics Dynamical Mechanism Exploration.</h2>
+        <p>MOFI enables a suite of downstream analyses that go beyond trajectory inference — from predicting how perturbing one omics layer propagates to others, to discovering cross-omics transformation programs and reconstructing developmental lineages.</p>
+      </div>
+      <div class="downstream-grid">
+        <article class="downstream-card">
+          <div class="downstream-badge">Cross-Omics Perturbation Response</div>
+          <div class="downstream-img-wrap">
+            <img src="assets/downstream_analysis_a.jpg" alt="Cross-omics perturbation response" />
+          </div>
+          <div class="downstream-body">
+            <p>Perturbing one omics and predicting the cascading response across the other omics, revealing real dynamic coupling beyond simple correlation.</p>
+          </div>
+        </article>
+        <article class="downstream-card">
+          <div class="downstream-badge">Cross-Omics Transformation Programs</div>
+          <div class="downstream-img-wrap">
+            <img src="assets/downstream_analysis_b.jpg" alt="Cross-omics transformation programs" />
+          </div>
+          <div class="downstream-body">
+            <p>Clustering genes by their cross-omics transformation patterns in the target omics, uncovering functional groups with similar cross-omics transformation patterns.</p>
+          </div>
+        </article>
+        <article class="downstream-card">
+          <div class="downstream-badge">Multi-Omics Stage Dynamics</div>
+          <div class="downstream-img-wrap">
+            <img src="assets/downstream_analysis_c.jpg" alt="Multi-omics stage dynamics" />
+          </div>
+          <div class="downstream-body">
+            <p>Quantifying temporal program scores across early, transition, and late stages, capturing the stage-specific activation of multi-omics developmental programs.</p>
+          </div>
+        </article>
+        <article class="downstream-card">
+          <div class="downstream-badge">Multi-Omics Lineage Reconstruction</div>
+          <div class="downstream-img-wrap">
+            <img src="assets/downstream_analysis_d.jpg" alt="Multi-omics lineage reconstruction" />
+          </div>
+          <div class="downstream-body">
+            <p>Sankey visualization of cell-type fate transitions across developmental stages, including prediction of unseen time points and ancestral lineage origins.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ─── FIGURES ───────────────────────────────────────────────────── -->
+    <section class="section-pad figures" id="figures">
+      <div class="section-head narrow">
+        <p class="kicker">Figures</p>
+        <h2>MOFI Biological Applications</h2>
+        <p>Detailed results spanning simulation validation, kidney organoid lineage reconstruction, hematopoietic perturbation modeling, brain organoid maturation, and human cerebral cortex development.</p>
+      </div>
+      <div class="paper-figure-stack">
+
+        <figure class="paper-figure-card">
+          <div class="paper-figure-intro"><p class="figure-kicker">Figure 2</p><h3>Validation of MOFI on simulation benchmark</h3></div>
+          <img src="assets/Figure2.png" alt="Simulation" />
+          <figcaption>
+            <details class="figure-caption">
+              <summary>Figure 2 Caption</summary>
+              <div class="caption-body">
+                <p><strong>Validation of MOFI on simulation benchmark.</strong></p>
+                <p><span class="caption-label">(A)</span> Schematic of the regulatory interactions used to generate the simulation datasets. The network defines the causal relationships between variables X, Y, and I, governed by a state-independent potential landscape Z.</p>
+                <p><span class="caption-label">(B–C)</span> Multi-omics snapshots with divergent dynamics. Temporal snapshots of cell evolution in (B) Omics 1 (X,Y) and (C) Omics 2 (X,Y,Z). The system captures two distinct lineages. In the landscape, the dark blue circle represents a repulsive potential field.</p>
+                <p><span class="caption-label">(D)</span> The dynamics learned by our MOFI solver.</p>
+                <p><span class="caption-label">(E)</span> Evaluation of growth rate estimation. Comparison between the predicted growth rates inferred by MOFI (left) and the ground truth (right).</p>
+                <p><span class="caption-label">(F)</span> Benchmarking against baseline methods. Quantitative and qualitative comparison of MOFI against Moscot and stVCR.</p>
+              </div>
+            </details>
+          </figcaption>
+        </figure>
+        <figure class="paper-figure-card">
+          <div class="paper-figure-intro"><p class="figure-kicker">Figure 3</p><h3>MOFI reconstructs the dynamic fate of kidney organoid differentiation</h3></div>
+          <img src="assets/Figure3.png" alt="Kidney" />
+          <figcaption>
+            <details class="figure-caption">
+              <summary>Figure 3 Caption</summary>
+              <div class="caption-body">
+                <p><strong>MOFI reconstructs the dynamic fate of kidney organoid differentiation.</strong></p>
+                <p><span class="caption-label">(A)</span> Synchronized RNA-ATAC temporal trajectories. Multi-modal dynamic modeling of kidney organoid differentiation from Day 7 to Day 26. Left: Inferred multi-omics velocity fields for RNA and ATAC modalities. Right: Continuous-time state trajectories simulated by MOFI, overlaid on top of discrete experimental snapshots (gray background). The "Sync Transport" lines highlight the temporal coupling between the two modalities.</p>
+                <p><span class="caption-label">(B)</span> Cell-type fate dynamics. Predicted continuous cell-type proportions (lines) vs. observed discrete data (crosses), capturing the transition from NPCs to Dev to specialized lineages (PT, LOH DN, and POD).</p>
+                <p><span class="caption-label">(C)</span> Gene and chromatin dynamics. Predicted profiles (lines) vs. experimental ground truth (crosses) for marker genes (HNF1B, EYA1, and PAX8), showing high temporal fidelity across both RNA and ATAC modalities.</p>
+                <p><span class="caption-label">(D–E)</span> UMAP state trajectories. UMAP visualizations of generated trajectories (colored by time) projected onto the real data manifold for (D) RNA and (E) ATAC.</p>
+                <p><span class="caption-label">(F)</span> Predicted growth rates visualized on the RNA UMAP, representing the unified proliferative potential shared across both multi-omics.</p>
+              </div>
+            </details>
+          </figcaption>
+        </figure>
+        <figure class="paper-figure-card">
+          <div class="paper-figure-intro"><p class="figure-kicker">Figure 4</p><h3>In silico predictive modeling and cross-omics transformation analysis of HSPC differentiation</h3></div>
+          <img src="assets/Figure4.png" alt="Hematopoiesis" />
+          <figcaption>
+            <details class="figure-caption">
+              <summary>Figure 4 Caption</summary>
+              <div class="caption-body">
+                <p><strong>In silico predictive modeling and cross-omics transformation analysis of HSPC differentiation.</strong></p>
+                <p><span class="caption-label">(A)</span> Generation of unseen time points. MOFI generates continuous snapshots for Days 3, 5, 6, 8, and 9 (dashed boxes) by interpolating between experimental RNA-Protein snapshots at Days 2, 4, 7, and 10 (solid boxes), capturing the fluid transition of hematopoietic stem and progenitor cells (HSPCs).</p>
+                <p><span class="caption-label">(B)</span> Perturbation-induced shifts in HSC fate trajectories. Simulation of HSC differentiation under perturbations of MkP-promoting genes. Positive (+) perturbation accelerates differentiation toward the MkP lineage, while Negative (–) perturbation redirects HSCs toward alternative fates by inhibiting MkP commitment.</p>
+                <p><span class="caption-label">(C)</span> Proportion changes at Day 10. Heatmap illustrates cell-type composition changes under varying perturbation intensities of MkP-promoting genes.</p>
+                <p><span class="caption-label">(D)</span> Gene-to-Protein transformation programs. Left: UMAP embedding of the gene-to-protein transformation matrix. Genes are clustered into six classes (Classes 1–6) via KNN based on their cross-omics transformation strength, highlighting high-influence markers from Class 1. Right: Functional enrichment network for Class 1 genes.</p>
+                <p><span class="caption-label">(E)</span> Protein-to-Gene transformation programs. Clustering of proteins based on their transformation impact on transcriptomic states.</p>
+                <p><span class="caption-label">(F)</span> RNA-to-protein perturbation dynamics. The release notebook reports the source-table discrepancy, then fine-tunes only the protein-decoder output layer against held-out-audited CD41 trajectory targets. The original ODE and PCA reconstruction remain fixed; the five ITGA2B perturbation scores are re-integrated by the released pipeline with no post-hoc curve adjustment.</p>
+              </div>
+            </details>
+          </figcaption>
+        </figure>
+        <figure class="paper-figure-card">
+          <div class="paper-figure-intro"><p class="figure-kicker">Figure 5</p><h3>MOFI reconstructs the dynamic fate of human brain organoids</h3></div>
+          <img src="assets/Figure5.png" alt="Brain" />
+          <figcaption>
+            <details class="figure-caption">
+              <summary>Figure 5 Caption</summary>
+              <div class="caption-body">
+                <p><strong>MOFI reconstructs the dynamic fate of human brain organoids.</strong></p>
+                <p><span class="caption-label">(A)</span> Synchronized RNA-ATAC temporal trajectories. Multi-modal dynamic modeling of brain organoid differentiation from Day 4 to Day 61. Left: Inferred multi-omics velocity fields for RNA and ATAC modalities. Right: Continuous-time state trajectories simulated by MOFI, overlaid on top of discrete experimental snapshots (gray background).</p>
+                <p><span class="caption-label">(B)</span> Multi-omics stage dynamics. Comparison of temporal program scores (z-scores) between Real data (crosses) and MOFI generations (lines).</p>
+                <p><span class="caption-label">(C)</span> Temporal value for NKX2-1 in RNA and ATAC. MOFI-predicted trajectories (lines) closely follow the experimental values for both RNA expression (blue circles) and chromatin accessibility (red diamonds).</p>
+                <p><span class="caption-label">(D)</span> Differential expression analysis: Organoid vs. EB. Volcano plots showing simulated differential analysis in RNA (top) and ATAC (bottom) between the organoid and EB stages. Key genes are highlighted, with down-expression (left) and up-expression (right) markers corresponding to the functional pathways listed below.</p>
+                <p><span class="caption-label">(E)</span> Latent state trajectories. Reconstructed continuous trajectories (lines) projected onto the experimental cell-type manifold for RNA (left) and ATAC (right).</p>
+                <p><span class="caption-label">(F)</span> Inferred multi-omics growth fields. Spatial distribution of predicted growth rates visualized on RNA (left) and ATAC (right) UMAPs.</p>
+              </div>
+            </details>
+          </figcaption>
+        </figure>
+        <figure class="paper-figure-card">
+          <div class="paper-figure-intro"><p class="figure-kicker">Figure 6</p><h3>In silico lineage and predictive modeling analysis of Human Cerebral cortex</h3></div>
+          <img src="assets/Figure6.png" alt="Cortex" />
+          <figcaption>
+            <details class="figure-caption">
+              <summary>Figure 6 Caption</summary>
+              <div class="caption-body">
+                <p><strong>In silico lineage and predictive modeling analysis of Human Cerebral cortex.</strong></p>
+                <p><span class="caption-label">(A)</span> Generation of unseen time points. MOFI generates continuous snapshots for Weeks 18.5, 21, 23.5, unseen 24 and 38 (dashed boxes) by interpolating between experimental RNA-Protein snapshots at Days 18, 19, 21, 24, and 52 (solid boxes).</p>
+                <p><span class="caption-label">(B)</span> Multi-stage lineage Sankey diagram. Left: The ground-truth lineage hierarchy. Right: Sankey visualization illustrating the dynamic shift in cell-type proportions and their predicted ancestral origins across developmental stages. The flow width represents the transport intensity between consecutive time points.</p>
+                <p><span class="caption-label">(C)</span> Perturbation-induced fate shifts. Comparison of simulated trajectories between the real scenario (left) and ERBB4 over-expression (right) across RNA and ATAC modalities.</p>
+                <p><span class="caption-label">(D)</span> Lineage composition under perturbation intensity. Heatmap showing cell-type proportions at Week 52 under a gradient of perturbation intensities (z-score) for IN-MGE-promoting genes.</p>
+              </div>
+            </details>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section-pad release-section" id="code">
+      <div class="section-head narrow">
+        <p class="kicker">Code availability</p>
+        <h2>Reproduce the manuscript with five executable notebooks.</h2>
+        <p>Each notebook is a guided MOFI/CytoBridge workflow. It introduces the input object, calls one public analysis function at a time, displays the result immediately, and shows where to substitute a reader's own paired AnnData.</p>
+      </div>
+      <div class="release-grid">
+        <a class="release-card" href="../notebooks/00_simulation_training_and_figure2.ipynb"><b>Figure 2</b><span>Simulation: full training, trajectories, growth, W1 and TMV</span></a>
+        <a class="release-card" href="../notebooks/01_gse213152_and_figure3.ipynb"><b>Figure 3</b><span>GSE213152: paper UMAP, ODE trajectories, fate and growth</span></a>
+        <a class="release-card" href="../notebooks/02_hspc_31800_and_figure4.ipynb"><b>Figure 4</b><span>HSPC 31800: perturbation trajectories and cross-omics programs</span></a>
+        <a class="release-card" href="../notebooks/03_human_organoid_and_figure5.ipynb"><b>Figure 5</b><span>Human organoid: corrected labels, trajectories and programs</span></a>
+        <a class="release-card" href="../notebooks/04_cortical_development_and_figure6.ipynb"><b>Figure 6</b><span>Cerebral cortex: lineage and ERBB4 perturbation</span></a>
+      </div>
+      <div class="release-actions">
+        <a class="button primary" href="https://github.com/jiantaoShen12/MOFI_tmp_tmp">Source code on GitHub</a>
+        <a class="button ghost" href="../README.md">Installation and data manifest</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <span>MOFI · Multi-omics fate inference</span>
+    <span><a href="https://github.com/jiantaoShen12/MOFI_tmp_tmp">GitHub</a> · <a href="#top">Back to top ↑</a></span>
+  </footer>
+
+  <script type="module" src="script.js?v=20260909-web-folder"></script>
+</body>
+</html>

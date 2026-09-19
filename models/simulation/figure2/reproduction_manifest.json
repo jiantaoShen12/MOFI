@@ -1,0 +1,24 @@
+{
+  "dataset": "datasets/simulation/simulation4_2d.h5ad",
+  "simulation_csv": "datasets/simulation/simulation_gene.csv",
+  "training_config": "configs/training/simulation_figure2.yaml",
+  "fitted_adata": "models/simulation/figure2/adata.h5ad",
+  "checkpoints": [
+    "models/simulation/figure2/Pretrain1/last_model.pth",
+    "models/simulation/figure2/Pretrain2/last_model.pth"
+  ],
+  "device_used_for_recorded_run": "cuda",
+  "seed": 22,
+  "time_mapping": {
+    "0.0": 0.0,
+    "0.75": 1.0,
+    "1.5": 2.0,
+    "2.25": 3.0,
+    "3.0": 4.0
+  },
+  "sha256": {
+    "adata.h5ad": "bea995641a0913c525eb51c34ec0a6d477572293e9054ed95c368fd5f50ca83f",
+    "Pretrain1/last_model.pth": "2d5d9988916ce729b16d33b0e398eba2f35cafe4be169a82d9d4430fb1fd47e0",
+    "Pretrain2/last_model.pth": "b5db8c7c762d1fb26339f02c485af4c5543c7a09a33fba15e6f502c636029f5a"
+  }
+}
