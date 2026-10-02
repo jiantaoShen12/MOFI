@@ -1,0 +1,7 @@
+numpy
+pandas
+matplotlib
+anndata
+plotly
+kaleido
+jupyterlab

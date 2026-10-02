@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f2c61"/>
+      <stop offset="100%" stop-color="#be4673"/>
+    </linearGradient>
+  </defs>
+  <!-- Three parallel wavy layers merging -->
+  <path d="M10 25 Q25 18 40 25 Q55 32 70 25" stroke="url(#g1)" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M10 40 Q25 33 40 40 Q55 47 70 40" stroke="url(#g1)" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.7"/>
+  <path d="M10 55 Q25 48 40 55 Q55 62 70 55" stroke="url(#g1)" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Connection arrows -->
+  <path d="M35 28 L38 37" stroke="#be4673" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M45 37 L42 48" stroke="#be4673" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Dots at intersections -->
+  <circle cx="40" cy="25" r="3" fill="#1f2c61"/>
+  <circle cx="40" cy="40" r="3" fill="#be4673"/>
+  <circle cx="40" cy="55" r="3" fill="#f2af32"/>
+</svg>

@@ -1,0 +1,8 @@
+direction,class,feature,feature_type,manuscript_context
+gene_to_protein,1,RNASE3,gene,mast-cell and myeloid program
+gene_to_protein,1,TPSB2,gene,mast-cell and myeloid program
+gene_to_protein,1,CTSG,gene,mast-cell and myeloid program
+gene_to_protein,1,IL1B,gene,mast-cell and myeloid program
+protein_to_gene,1,integrin beta7,protein,adhesion and homing
+protein_to_gene,1,CD49d (alpha4),protein,adhesion and homing
+protein_to_gene,1,CD29 (beta1),protein,adhesion and homing

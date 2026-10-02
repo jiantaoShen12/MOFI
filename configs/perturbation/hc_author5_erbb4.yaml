@@ -1,0 +1,78 @@
+literature_gene_panel:
+  run_dir: results/hc_author5
+  base_indices_csv: ""
+  source_selection_mode: dual_high_endpoint_probs
+  source_endpoint_cell_types: [IN-MGE, IN-CGE]
+  source_top_n: 512
+  source_min_prob_each: 0.12
+  device: cpu
+  traj_scores: [-9,-6,-3,0,3, 6, 9]
+  traj_sample_n: 6
+  traj_seed: 4
+  traj_dim_reduction: umap
+  traj_output_dir: results/hc_author5/figures/perturb_literature_gene_panel/trajectory
+  fate_scores: [-9,-6,-3,0,3, 6, 9]
+  fate_sample_n: all
+  fate_seed: 4
+  heatmap_z_order: [-9,-6,-3,0,3, 6, 9]
+  sweep_cell_types: [RG, IPC, IN-fetal, IN-CGE, IN-MGE]
+  focus_curve_cell_types: [RG, IPC, IN-fetal, IN-CGE, IN-MGE]
+  focus_curve_scores: [-9,-6,-3,0,3, 6, 9]
+  indices_output_dir: results/hc_author5/tables/perturb_literature_gene_panel/indices
+  fate_table_root: results/hc_author5/tables/perturb_literature_gene_panel/fate
+  fate_figure_root: results/hc_author5/figures/perturb_literature_gene_panel/fate
+  summary_csv: results/hc_author5/tables/perturb_literature_gene_panel/literature_gene_panel_summary.csv
+  genes:
+    - gene: SOX6
+      panel_id: mge_sox6
+      lineage_label: IN-MGE
+      paper_context: LHX6-downstream MGE interneuron regulator; retained because it is present in the current perturbable feature space
+      expected_direction: promote IN-MGE fate
+    - gene: GAD1
+      panel_id: mge_gad1
+      lineage_label: IN-MGE
+      paper_context: Core inhibitory interneuron marker used here as a perturbable proxy for stronger MGE-like terminal differentiation
+      expected_direction: promote IN-MGE fate
+    - gene: GAD2
+      panel_id: mge_gad2
+      lineage_label: IN-MGE
+      paper_context: Complementary inhibitory interneuron marker retained because it is available in the current perturbable feature space
+      expected_direction: promote IN-MGE fate
+    - gene: CALB2
+      panel_id: cge_calb2
+      lineage_label: IN-CGE
+      paper_context: CGE-associated interneuron marker retained because it is present in the current perturbable feature space
+      expected_direction: promote IN-CGE fate
+
+    - gene: ERBB4
+      panel_id: mge_erbb4
+      lineage_label: IN-MGE
+      paper_context: MGE-associated interneuron signaling program retained as a perturbable proxy for MGE fate bias
+      expected_direction: promote IN-MGE fate
+
+    - gene: RELN
+      panel_id: mge_reln
+      lineage_label: IN-CGE
+      paper_context: Present perturbable marker that can report shifts toward RELN-positive interneuron programs in this reduced author5 system
+      expected_direction: context-dependent shift within terminal interneuron programs
+    - gene: PROX1
+      panel_id: cge_prox1
+      lineage_label: IN-CGE
+      paper_context: Canonical CGE-lineage regulator retained because it is present in the current perturbable feature space
+      expected_direction: promote IN-CGE fate
+    - gene: NR2F2
+      panel_id: cge_nr2f2
+      lineage_label: IN-CGE
+      paper_context: CGE-associated transcriptional regulator retained as a perturbable proxy for the CGE program
+      expected_direction: promote IN-CGE fate
+    - gene: VIP
+      panel_id: cge_vip
+      lineage_label: IN-CGE
+      paper_context: Canonical CGE terminal marker retained because it is present in the current perturbable feature space
+      expected_direction: promote IN-CGE fate
+
+    - gene: LEF1
+      panel_id: cge_lef1
+      lineage_label: IN-CGE
+      paper_context: WNT/CGE-linked regulator retained as a perturbable proxy for the CGE branch
+      expected_direction: promote IN-CGE fate
