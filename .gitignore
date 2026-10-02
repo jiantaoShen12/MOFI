@@ -1,0 +1,61 @@
+# Python caches and build products
+__pycache__/
+*.py[cod]
+*$py.class
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Jupyter, IDE, OS, and local environments
+.ipynb_checkpoints/
+.cache/
+.jupyter/
+.vendor/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.venv/
+venv/
+env/
+
+# Large external paper assets and generated analysis outputs
+paper_data/*
+!paper_data/README.md
+models/real/
+results/
+validation/
+Map_output/
+reference_results/
+
+# Internal handoff notes and comparison logs
+AI_HANDOFF.md
+NEXT_AI_PLAN.md
+COMPARISON_REPORT.md
+
+# Generated pipeline runs and logs
+pipeline_runs/
+examples/configs/*/pipeline_runs/
+*.log
+*.out
+
+# Legacy upstream configurations are not part of the public release contract.
+# The portable release configurations live under the top-level configs/ folder.
+src/CytoBridge/configs/
+examples/configs/
+examples/scripts/
+
+# Legacy dataset-specific helper outside the release contract
+downstream/plotting/rebuild_gse253582_12_real_label_rna_programs.py
+
+# Large external datasets; the small simulation inputs remain public.
+datasets/GSE213152/
+datasets/GSE233134/
+datasets/31800/
+
+# Tutorial-generated outputs
+tutorial/save_model/*
+!tutorial/save_model/.gitkeep
+tutorial/save_results/*
+!tutorial/save_results/.gitkeep

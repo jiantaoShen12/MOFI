@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#be4673"/>
+      <stop offset="100%" stop-color="#f2af32"/>
+    </linearGradient>
+  </defs>
+  <!-- Central progenitor cell -->
+  <circle cx="40" cy="22" r="8" fill="url(#g2)" opacity="0.9"/>
+  <!-- Branching fate paths -->
+  <path d="M40 30 Q30 42 18 55" stroke="#be4673" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <path d="M40 30 Q40 45 40 58" stroke="#9e4a6a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <path d="M40 30 Q50 42 62 55" stroke="#f2af32" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <!-- Daughter cells -->
+  <circle cx="18" cy="58" r="6" fill="#be4673" opacity="0.8"/>
+  <circle cx="40" cy="62" r="6" fill="#9e4a6a" opacity="0.8"/>
+  <circle cx="62" cy="58" r="6" fill="#f2af32" opacity="0.8"/>
+  <!-- Proliferation indicators (small dividing cells) -->
+  <circle cx="14" cy="62" r="2.5" fill="#be4673" opacity="0.4"/>
+  <circle cx="22" cy="62" r="2.5" fill="#be4673" opacity="0.4"/>
+  <circle cx="58" cy="62" r="2.5" fill="#f2af32" opacity="0.4"/>
+  <circle cx="66" cy="62" r="2.5" fill="#f2af32" opacity="0.4"/>
+</svg>

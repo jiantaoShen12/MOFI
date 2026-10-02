@@ -1,0 +1,232 @@
+paths:
+  dynamic_adata: paper_data/dynamics/hspc_31800/adata.h5ad
+  main_processed: paper_data/processed/hspc_31800/rna.h5ad
+  sub_processed: paper_data/processed/hspc_31800/protein.h5ad
+  map_model_path: paper_data/maps/hspc_31800/best_model.pt
+output:
+  root_dir: results/hspc_31800
+inference:
+  device: cuda
+  seed: 42
+  dt: 0.05
+  init_time: 0.0
+  mapper_type: ae
+  mapper_kwargs: {}
+  sample_max_cells: 999999
+  passes: sample
+  time_grid_presets:
+    coarse_dense:
+    - 0.25
+    - 0.5
+    - 0.75
+    - 1.0
+    - 1.25
+    - 1.5
+    - 1.75
+    - 2.0
+    - 2.25
+    - 2.5
+    - 2.75
+    - 3.0
+  run_grids:
+  - mode: coarse_dense
+analysis:
+  time_key: time_point_processed
+  cell_type_key: cell_type
+  decode_mode: pca_projection
+  classifier:
+    type: linear
+    train_space: joint
+    exclude_cell_types: []
+  path_definition:
+    target_cell_type: MkP
+  main_var_markers:
+  - ITGA2B
+  - GP1BA
+  - TFRC
+  - KLF1
+  - GATA1
+  - MPO
+  - LYZ
+  - HMGCR
+  sec_var_markers:
+  - CD41
+  - CD42b
+  - CD71
+  prior_targets:
+  - HMGCR
+  - KDR
+  - FLT3
+  programs:
+    megakaryocyte:
+    - ITGA2B
+    - GP1BA
+    - NFE2
+    - GATA1
+    - PPBP
+    - PF4
+    erythroid:
+    - KLF1
+    - GATA1
+    - TFRC
+    - ALAS2
+    - HBA1
+    - HBB
+    myeloid:
+    - MPO
+    - LYZ
+    - ELANE
+    - S100A8
+    - S100A9
+    - CSF3R
+  jacobian_grn:
+    max_cells: 16
+    top_k: 20
+    seed: 42
+    include_hessian_term: true
+    hessian_eps: 0.001
+    mapper_batch_size: 64
+    main_var_features:
+    - ITGA2B
+    - GP1BA
+    - TFRC
+    - KLF1
+    - GATA1
+    - MPO
+    - LYZ
+    - HMGCR
+    - KDR
+    - FLT3
+    sec_var_features:
+    - CD41
+    - CD42b
+    - CD71
+  perturbation:
+    dt: 0.05
+    device: cpu
+    target_groups:
+    - name: Ery_core_1
+      genes:
+      - KLF1
+      - GATA1
+      - TFRC
+    - name: Ery_core_2
+      genes:
+      - ALAS2
+      - HBA1
+      - HBB
+    - name: Ery_union
+      genes:
+      - KLF1
+      - GATA1
+      - TFRC
+      - ALAS2
+      - HBA1
+      - HBB
+    - name: Mk_core_1
+      genes:
+      - ITGA2B
+      - GP1BA
+    - name: Mk_core_2
+      genes:
+      - PF4
+      - PPBP
+    - name: Mk_union
+      genes:
+      - ITGA2B
+      - GP1BA
+      - PF4
+      - PPBP
+    - name: Mas_core_1
+      genes:
+      - TPSAB1
+      - TPSB2
+      - CPA3
+    - name: Mas_core_2
+      genes:
+      - MS4A2
+      - FCER1A
+      - IL3RA
+    - name: Mas_union
+      genes:
+      - TPSAB1
+      - TPSB2
+      - CPA3
+      - MS4A2
+      - FCER1A
+      - IL3RA
+    z_scores:
+    - -8.0
+    - -6.0
+    - -4.0
+    - -2.0
+    - 0.0
+    - 2.0
+    - 4.0
+    - 6.0
+    - 8.0
+    sweep_cell_types:
+    - EryP
+    - MasP
+    - MkP
+    - MoP
+    - NeuP
+    focus_curve_cell_types:
+    - EryP
+    - MasP
+    - MkP
+    - MoP
+    - NeuP
+    focus_curve_scores:
+    - -8.0
+    - 0.0
+    - 8.0
+    missing_target_policy: zero
+  key_molecule:
+    path_quantile: 0.75
+    fdr_alpha: 0.05
+    min_abs_log2fc: 0.25
+    min_pct: 0.1
+    top_k: 30
+    min_time_hits: 2
+    main_var_panel:
+    - ITGA2B
+    - GP1BA
+    - TFRC
+    - KLF1
+    - GATA1
+    - NFE2
+    - PPBP
+    - PF4
+    - MPO
+    - LYZ
+    - ELANE
+    - S100A8
+    - S100A9
+    - HMGCR
+    - KDR
+    - FLT3
+    sec_var_panel:
+    - CD41
+    - CD42b
+    - CD71
+figure:
+  theme: journal
+  dpi: 300
+  marker_top_n: 6
+  cell_type_top_n: 8
+  cell_type_exclude:
+  - HSC
+  program_top_n: 12
+  perturb_max_groups: 9
+  perturb_max_cell_types: 8
+  perturb_curve_cell_types:
+  - EryP
+  - MasP
+  - MkP
+  - MoP
+  - NeuP
+  perturb_curve_scores:
+  - -8.0
+  - 0.0
+  - 8.0
