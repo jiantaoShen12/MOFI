@@ -56,7 +56,7 @@ The notebooks cover a simulation benchmark and four biological datasets.
 
 ## Simulation runtime
 
-Open `notebooks/00_simulation_training_and_figure2.ipynb` to run the supplied simulation. GPU model fitting takes **less than 10 mins** for this example; the saved training record is approximately 2.5 minutes. This timing excludes installation and downstream figure generation.
+Open `notebooks/00_simulation_training_and_figure2.ipynb` to run the supplied simulation. The recorded simulation training run took approximately **152 seconds** using CUDA. This timing excludes installation and downstream figure generation.
 
 ## Code
 
