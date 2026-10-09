@@ -1,0 +1,47 @@
+ckpt_dir: paper_data/dynamics/ho
+model:
+  components:
+  - velocity
+  - growth
+  growth_net:
+    activation: relu
+    hidden_dim: 400
+    n_layers: 3
+    residual: false
+  multi:
+    Map_model_path: paper_data/maps/ho/best_model.pt
+    hidden_dim: 32
+    input_dim1: 50
+    input_dim2: 50
+    mode: (1,2)
+    multi_alpha: 0.1
+    multi_use: true
+  velocity_net:
+    hidden_dim: 400
+    n_layers: 2
+    residual: false
+training:
+  defaults:
+    batch_size: 400
+    lambda_ot_sec: 1.0
+    lr: 0.0001
+  plan:
+  - OT_loss: sinkhorn_detach
+    epochs: 150
+    global_mass: true
+    lambda_energy: 0
+    lambda_mass: 0.1
+    lambda_ot: 1.0
+    method: ODEFunc
+    mode: neural_ode
+    name: Pretrain1
+    save_strategy: last
+  - OT_loss: sinkhorn_detach
+    epochs: 200
+    global_mass: true
+    lambda_energy: 0.01
+    lambda_mass: 10
+    lambda_ot: 1.0
+    method: ODEFunc
+    mode: neural_ode
+    name: Pretrain2

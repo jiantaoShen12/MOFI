@@ -4,7 +4,21 @@ MOFI reconstructs continuous cell-state dynamics from time-series single-cell mu
 
 ![MOFI framework](web/assets/Figure1.png)
 
-The full implementation and training code will be released after publication. This repository currently contains analysis examples with saved results, simulation data and the interactive web demo.
+## Getting started
+
+From the repository root:
+
+```bash
+git clone https://github.com/jiantaoShen12/MOFI.git
+cd MOFI
+conda create -n mofi python -y
+conda activate mofi
+python -m pip install -r requirements.txt
+python -m pip install -e .
+jupyter lab
+```
+
+The simulation notebook includes model fitting and evaluation. The biological examples use fitted models and processed data placed under `paper_data/`; see the [data notes](paper_data/README.md). These biological data and models are not included in the repository.
 
 ## Examples
 
@@ -18,15 +32,25 @@ The notebooks cover a simulation benchmark and four biological datasets.
 | [Human organoids](notebooks/03_human_organoid_and_figure5.ipynb) | Developmental programs and NKX2-1 dynamics |
 | [Cortical development](notebooks/04_cortical_development_and_figure6.ipynb) | Lineage transitions and ERBB4 perturbation |
 
-The notebooks can be read on GitHub. Re-running the biological analyses requires the full implementation and fitted models, which are not included in this pre-publication version.
+## Code
 
-## Data
+Paths below are relative to the repository root.
 
-The simulation inputs are in [`datasets/simulation/`](datasets/simulation/). Data and model links for the biological examples will be added with the full release.
+| Directory | Contents |
+| --- | --- |
+| `src/` | MOFI implementation in `CytoBridge/`, with the `mofi/` import alias. `Map/` handles cross-modality mapping, `tl/` model fitting and dynamics, `pp/` preprocessing, and `pl/` plotting and perturbation analysis. |
+| `configs/` | Training, analysis and perturbation settings, with selected cell indices and gene lists in `analysis_inputs/`. |
+| `notebooks/` | Simulation training and analyses for Figures 2–6; `mofi_notebook.py` provides shared notebook helpers. |
+| `scripts/` | Notebook execution and simulation data generation, training, evaluation and plotting. |
+| `datasets/simulation/` | Simulation inputs and reference gene-expression values. |
+| `models/simulation/` | Fitted simulation models and evaluation results. |
+| `downstream/plotting/` | Additional plotting routines for the biological analyses. |
+| `paper_data/` | Notes on the external biological data and fitted models needed by the notebooks. |
+| `web/` | Interactive website, paper figures in `assets/`, and sampled trajectories in `demo_data/`. |
 
 ## Interactive examples
 
-The [web demo](web/) shows simulated and kidney organoid trajectories. To view it locally, run this command from the repository root:
+The [web demo](https://jiantaoshen12.github.io/MOFI/) shows simulated and kidney organoid trajectories. To view it locally, run this command from the repository root:
 
 ```bash
 python -m http.server 8000 --directory web
