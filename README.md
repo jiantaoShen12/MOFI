@@ -4,6 +4,26 @@ MOFI reconstructs continuous cell-state dynamics from time-series single-cell mu
 
 ![MOFI framework](web/assets/Figure1.png)
 
+## System requirements
+
+The core package import and a basic CUDA calculation were checked on Windows 11 Pro 25H2 with Python 3.10.20, PyTorch 2.6.0 and CUDA 12.4. The workstation has an NVIDIA GeForce RTX 4090 with 24 GB GPU memory. Linux and macOS have not been tested for this release.
+
+The installed dependency versions in that environment are:
+
+| Dependencies | Versions |
+| --- | --- |
+| PyTorch, torchvision, torchaudio | 2.6.0, 0.21.0, 2.6.0 (CUDA 12.4 builds) |
+| NumPy, SciPy, pandas, scikit-learn | 1.26.4, 1.15.3, 2.3.3, 1.7.1 |
+| Scanpy, AnnData, h5py, umap-learn | 1.11.3, 0.11.4, 3.14.0, 0.5.12 |
+| torchdiffeq, torchsde, POT, GeomLoss | 0.2.5, 0.2.6, 0.9.7, 0.2.6 |
+| PHATE, scVelo | 2.0.0, 0.3.3 |
+| Matplotlib, seaborn, Plotly, Kaleido | 3.10.9, 0.13.2, 7.0.0, 0.2.1 |
+| PyYAML, tqdm, joblib, ipywidgets | 6.0.2, 4.67.1, 1.5.3, 8.1.7 |
+
+Notebook file validation was checked separately with Python 3.13.9, nbformat 5.10.4, nbclient 0.10.2 and JupyterLab 4.4.7. This check did not execute the analysis notebooks.
+
+An NVIDIA GPU is recommended for model training. The simulation training script also accepts `--device cpu`, although CPU runs take longer. A desktop with 16 GB RAM is recommended for the small simulation; larger biological datasets may need more memory. No specialised hardware is needed to view the saved notebook figures or the web demo.
+
 ## Getting started
 
 From the repository root:
@@ -11,12 +31,14 @@ From the repository root:
 ```bash
 git clone https://github.com/jiantaoShen12/MOFI.git
 cd MOFI
-conda create -n mofi python -y
+conda create -n mofi python=3.10 -y
 conda activate mofi
 python -m pip install -r requirements.txt
 python -m pip install -e .
 jupyter lab
 ```
+
+Installation typically takes around 10–30 minutes on a desktop computer, depending on the internet connection and dependency downloads.
 
 The simulation notebook includes model fitting and evaluation. The biological examples use fitted models and processed data placed under `paper_data/`; see the [data notes](paper_data/README.md). These biological data and models are not included in the repository.
 
@@ -31,6 +53,10 @@ The notebooks cover a simulation benchmark and four biological datasets.
 | [HSPCs](notebooks/02_hspc_31800_and_figure4.ipynb) | RNA–protein dynamics and MkP perturbation |
 | [Human organoids](notebooks/03_human_organoid_and_figure5.ipynb) | Developmental programs and NKX2-1 dynamics |
 | [Cortical development](notebooks/04_cortical_development_and_figure6.ipynb) | Lineage transitions and ERBB4 perturbation |
+
+## Simulation runtime
+
+Open `notebooks/00_simulation_training_and_figure2.ipynb` to run the supplied simulation. GPU model fitting takes **less than 10 mins** for this example; the saved training record is approximately 2.5 minutes. This timing excludes installation and downstream figure generation.
 
 ## Code
 
