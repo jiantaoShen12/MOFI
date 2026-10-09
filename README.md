@@ -20,8 +20,6 @@ The installed dependency versions in that environment are:
 | Matplotlib, seaborn, Plotly, Kaleido | 3.10.9, 0.13.2, 7.0.0, 0.2.1 |
 | PyYAML, tqdm, joblib, ipywidgets | 6.0.2, 4.67.1, 1.5.3, 8.1.7 |
 
-Notebook file validation was checked separately with Python 3.13.9, nbformat 5.10.4, nbclient 0.10.2 and JupyterLab 4.4.7. This check did not execute the analysis notebooks.
-
 An NVIDIA GPU is recommended for model training. The simulation training script also accepts `--device cpu`, although CPU runs take longer. A desktop with 16 GB RAM is recommended for the small simulation; larger biological datasets may need more memory. No specialised hardware is needed to view the saved notebook figures or the web demo.
 
 ## Getting started
