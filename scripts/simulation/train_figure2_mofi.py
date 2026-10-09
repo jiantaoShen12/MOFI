@@ -65,7 +65,7 @@ def main() -> None:
     set_seed(SEED)
     adata = preprocess(sc.read_h5ad(DATA_PATH))
 
-    # Preserve the exact preparation sequence used for experiment_simu_05.
+    # Prepare the second simulation modality.
     simulation_df = pd.read_csv(SIMULATION_CSV)
     adata_t = AnnData(
         simulation_df[["x1", "x2", "x4"]].to_numpy(dtype="float32")

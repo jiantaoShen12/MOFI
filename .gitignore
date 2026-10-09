@@ -29,24 +29,18 @@ validation/
 Map_output/
 reference_results/
 
-# Internal handoff notes and comparison logs
-AI_HANDOFF.md
-NEXT_AI_PLAN.md
-COMPARISON_REPORT.md
-
 # Generated pipeline runs and logs
 pipeline_runs/
 examples/configs/*/pipeline_runs/
 *.log
 *.out
 
-# Legacy upstream configurations are not part of the public release contract.
-# The portable release configurations live under the top-level configs/ folder.
+# Older configurations; current settings are in configs/.
 src/CytoBridge/configs/
 examples/configs/
 examples/scripts/
 
-# Legacy dataset-specific helper outside the release contract
+# Older dataset-specific helper
 downstream/plotting/rebuild_gse253582_12_real_label_rna_programs.py
 
 # Large external datasets; the small simulation inputs remain public.

@@ -6,9 +6,9 @@ MOFI reconstructs continuous cell-state dynamics from time-series single-cell mu
 
 ## System requirements
 
-The core package import and a basic CUDA calculation were checked on Windows 11 Pro 25H2 with Python 3.10.20, PyTorch 2.6.0 and CUDA 12.4. The workstation has an NVIDIA GeForce RTX 4090 with 24 GB GPU memory. Linux and macOS have not been tested for this release.
+The environment used for package-import and CUDA checks was Windows 11 Pro 25H2, Python 3.10.20, PyTorch 2.6.0 and CUDA 12.4, on an NVIDIA GeForce RTX 4090 with 24 GB GPU memory. Linux and macOS have not been tested.
 
-The installed dependency versions in that environment are:
+Dependency versions:
 
 | Dependencies | Versions |
 | --- | --- |
@@ -43,6 +43,14 @@ The simulation notebook includes model fitting and evaluation. The biological ex
 ## Examples
 
 The notebooks cover a simulation benchmark and four biological datasets.
+
+To execute a notebook from the command line using an installed Jupyter kernel:
+
+```bash
+python scripts/execute_notebook.py notebooks/00_simulation_training_and_figure2.ipynb --kernel python3
+```
+
+Use `jupyter kernelspec list` to find another installed kernel and pass its name with `--kernel`. The script saves results in the notebook.
 
 | Notebook | Analysis |
 | --- | --- |
