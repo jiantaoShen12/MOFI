@@ -308,8 +308,7 @@ def render_hspc_time_slices(
 
     from downstream.plotting.plot_sync_multimodal_time_slices_31800 import render
 
-    # Preserve the original notebook contract: Figure 4 uses the archived
-    # paper UMAP estimators and must not refit them on the current machine.
+    # Use the saved UMAP estimators to reproduce Figure 4.
     umap_dir = _root_path("paper_data/umap/hspc_31800", repo_root)
     return Path(
         render(

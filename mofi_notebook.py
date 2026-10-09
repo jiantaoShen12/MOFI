@@ -29,7 +29,7 @@ def display_png_file(path: str | Path) -> None:
 
 
 def show_paper_panel(path: str | Path) -> None:
-    """Display exactly one manuscript panel in the current notebook cell."""
+    """Display a manuscript panel in the current notebook cell."""
     display_png_file(path)
 
 
@@ -84,14 +84,14 @@ def suppress_live_plot_output():
 
 
 def find_repository(start: str | Path | None = None) -> Path:
-    """Find the release root from a notebook, working directory, or script."""
+    """Find the repository root from a notebook, working directory, or script."""
     current = Path(start or Path.cwd()).resolve()
     candidates = [current, *current.parents]
     for candidate in candidates:
         if (candidate / "src" / "CytoBridge").is_dir() and (candidate / "notebooks").is_dir():
             return candidate
     raise RuntimeError(
-        "MOFI repository not found. Start Jupyter from the MOFI-release root "
+        "MOFI repository not found. Start Jupyter from the repository root "
         "or pass root=... to setup_notebook()."
     )
 
@@ -100,8 +100,7 @@ def setup_notebook(root: str | Path | None = None, *, device: str = "auto"):
     """Configure one tutorial notebook and return ``ROOT, DEVICE, runner``.
 
     ``device='auto'`` selects CUDA when available and otherwise CPU.  All
-    runtime caches are kept under the release directory, never in a protected
-    Python installation.
+    runtime caches are kept in the repository's .cache directory.
     """
     root_path = find_repository(root)
     src_path = root_path / "src"
