@@ -1012,6 +1012,17 @@ def infer_dense_time_dual(
     domain2_proc = ad.read_h5ad(sub_processed_path)
     dyn_adata = ad.read_h5ad(dynamic_adata_path)
 
+    ho_signatures = None
+    ho_objects = {"RNA": domain1_proc, "ATAC": domain2_proc, "dynamics": dyn_adata}
+    if any("mofi_ho_label_correction" in obj.uns for obj in ho_objects.values()):
+        from CytoBridge.reproducibility import ho_label_signature, validate_ho_label_consistency
+
+        validate_ho_label_consistency(ho_objects, label_key=cell_type_key, time_key=time_key)
+        ho_signatures = {
+            name: ho_label_signature(obj, label_key=cell_type_key, time_key=time_key)
+            for name, obj in ho_objects.items()
+        }
+
     multi_cfg = dyn_adata.uns.get("all_model", {}).get("model_config", {}).get("multi", {})
     mode_src, mode_dst = _parse_multi_mode(multi_cfg.get("mode", (1, 2)))
     primary_domain = int(mode_src)
@@ -1056,6 +1067,9 @@ def infer_dense_time_dual(
         "secondary_domain": int(secondary_domain),
         "time_grid": [float(x) for x in full_grid],
     }
+
+    if ho_signatures is not None:
+        cache_signature["ho_label_signatures"] = ho_signatures
 
     init_idx = _select_initial_indices(
         main_proc,
