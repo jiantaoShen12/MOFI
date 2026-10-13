@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import os
 import shutil
@@ -14,7 +15,6 @@ from typing import Any, Dict, Iterable, Mapping, Optional, Sequence
 import anndata as ad
 import numpy as np
 import pandas as pd
-import torch
 import yaml
 
 
@@ -189,20 +189,25 @@ def correct_ho_stage_labels(
 
     The early stage originally labelled ``nepi`` is neuroectoderm (``nect``),
     whereas the later stage originally labelled ``nect`` is neuroepithelium
-    (``nepi``).  A temporary token prevents an in-place two-way replacement
-    from collapsing both categories.
+    (``nepi``), matching the manuscript HO Results section. This helper is
+    only for release copies known to have the original swapped abbreviations;
+    it cannot infer biological identity from labels alone. An applied audit is
+    checked before replacement and survives AnnData copying and H5AD I/O.
     """
 
     if label_key not in adata.obs:
         raise KeyError(f"HO label column not found: {label_key}")
+    correction = adata.uns.get("mofi_ho_label_correction", {})
+    if correction.get("status") == "applied":
+        # Older release audits already include label_key. Do not let a marker
+        # for another column silently suppress this column's correction.
+        if correction.get("label_key") != label_key:
+            raise ValueError("HO correction audit refers to a different label column")
+        return adata, copy.deepcopy(dict(correction))
     before = adata.obs[label_key].astype(str)
     after = before.replace({"nepi": "__mofi_early_nect__", "nect": "nepi"})
     after = after.replace({"__mofi_early_nect__": "nect"})
     changed = int(np.sum(before.to_numpy() != after.to_numpy()))
-    if changed == 0 and {"nect", "nepi"}.issubset(set(before.unique())):
-        correction = adata.uns.get("mofi_ho_label_correction", {})
-        if correction.get("status") == "applied":
-            return adata, dict(correction)
     adata.obs[label_key] = pd.Categorical(after)
     audit = {
         "status": "applied",
@@ -214,6 +219,81 @@ def correct_ho_stage_labels(
     }
     adata.uns["mofi_ho_label_correction"] = audit
     return adata, audit
+
+
+def ho_label_signature(
+    adata: ad.AnnData,
+    *,
+    label_key: str = "cell_type",
+    time_key: str = "time_point_processed",
+) -> str:
+    """Fingerprint actual annotations so pre-fix analysis caches are not reused."""
+    values = adata.obs[[label_key, time_key]].copy()
+    values[label_key] = values[label_key].astype(str)
+    hashed = pd.util.hash_pandas_object(values, index=True).to_numpy()
+    return hashlib.sha256(hashed.tobytes()).hexdigest()
+
+
+def validate_ho_label_consistency(
+    objects: Mapping[str, ad.AnnData],
+    *,
+    label_key: str = "cell_type",
+    time_key: str = "time_point_processed",
+) -> Dict[str, Any]:
+    """Read-only checks of release provenance and matched-cell annotations.
+
+    Compare by shared, unique obs_names, never by row position or population
+    counts. Disjoint objects cannot be checked cell by cell and are reported.
+    An applied marker is provenance, not proof of biological correctness: old
+    releases affected by repeated swaps still need manuscript/data review.
+    """
+    report: Dict[str, Any] = {"objects": {}, "pairs": {}}
+    for name, obj in objects.items():
+        audit = obj.uns.get("mofi_ho_label_correction", {})
+        if audit.get("status") != "applied" or audit.get("label_key") != label_key:
+            raise ValueError(f"HO {name}: missing applied correction audit for {label_key}")
+        if label_key not in obj.obs or time_key not in obj.obs:
+            raise ValueError(f"HO {name}: missing label or time column")
+        if not obj.obs_names.is_unique:
+            raise ValueError(f"HO {name}: obs_names must be unique for label comparison")
+        report["objects"][name] = {
+            "n_obs": int(obj.n_obs),
+            "labels_by_time": {
+                str(t): group[label_key].astype(str).value_counts().to_dict()
+                for t, group in obj.obs.groupby(time_key, observed=True)
+            },
+        }
+    names = list(objects)
+    for i, left in enumerate(names):
+        for right in names[i + 1:]:
+            a, b = objects[left], objects[right]
+            common = a.obs_names.intersection(b.obs_names, sort=False)
+            report["pairs"][f"{left}/{right}"] = {
+                "shared_cells": int(len(common)),
+                "status": "consistent" if len(common) else "no_shared_ids_unverified",
+            }
+            if not len(common):
+                continue
+            a_obs, b_obs = a.obs.loc[common], b.obs.loc[common]
+            if not np.array_equal(a_obs[label_key].astype(str), b_obs[label_key].astype(str)):
+                raise ValueError(f"HO {left}/{right}: labels disagree for shared cells")
+            if not np.array_equal(a_obs[time_key].to_numpy(), b_obs[time_key].to_numpy()):
+                raise ValueError(f"HO {left}/{right}: times disagree for shared cells")
+    return report
+
+
+def validate_ho_release_labels(repo_root: Path = REPO_ROOT) -> Dict[str, Any]:
+    """Inspect the three released HO objects without changing files."""
+    spec = dataset_spec("ho")
+    objects = {}
+    try:
+        for name, path in (("RNA", spec.primary_path), ("ATAC", spec.secondary_path),
+                           ("dynamics", spec.dynamics_path)):
+            objects[name] = ad.read_h5ad(_abs(path, repo_root), backed="r")
+        return validate_ho_label_consistency(objects)
+    finally:
+        for obj in objects.values():
+            obj.file.close()
 
 
 def apply_ho_release_label_fix(repo_root: Path = REPO_ROOT) -> Dict[str, Any]:
@@ -315,6 +395,8 @@ def run_real_training_smoke(
 ) -> Dict[str, Any]:
     """Run the original :func:`CytoBridge.tl.fit` on a small paired subset."""
 
+    import torch
+
     from CytoBridge.tl.fit import fit
     from CytoBridge.utils.utils import set_seed
 
@@ -325,6 +407,7 @@ def run_real_training_smoke(
     if dataset_id == "ho":
         primary, _ = correct_ho_stage_labels(primary)
         secondary, _ = correct_ho_stage_labels(secondary)
+        validate_ho_label_consistency({"RNA": primary, "ATAC": secondary})
     primary, secondary, sampled = _paired_time_sample(
         primary,
         secondary,
@@ -461,6 +544,8 @@ def run_real_downstream(
         reuse_cache=reuse_cache,
         repo_root=repo_root,
     )
+    if dataset_id == "ho":
+        validate_ho_release_labels(repo_root)
     paths = cfg["paths"]
     inference = cfg["inference"]
     analysis_cfg = cfg["analysis"]
@@ -554,6 +639,8 @@ def run_paper_ode_v3(
 
     spec = dataset_spec(dataset_id)
     paths = require_paper_data(dataset_id, repo_root)
+    if dataset_id == "ho":
+        validate_ho_release_labels(repo_root)
     umap_dir = _abs(Path("paper_data") / "umap" / dataset_id, repo_root)
     primary_umap = umap_dir / "primary.pkl"
     secondary_umap = umap_dir / "secondary.pkl"
@@ -654,8 +741,6 @@ def run_paper_ode_v3(
     shutil.copy2(secondary_umap, secondary_cache)
 
     dynamics = ad.read_h5ad(paths["dynamics"])
-    if dataset_id == "ho":
-        dynamics, _ = correct_ho_stage_labels(dynamics)
     model = load_model_from_adata(dynamics)
     mapper = build_transport_map(
         map_model_path=paths["analysis_map"],
