@@ -606,12 +606,16 @@ def run_paper_ode_v3(
         legacy_bundle = _abs("paper_data/inference/gse213152/figure3_secondary_legacy", repo_root)
         legacy_data = ad.read_h5ad(legacy_bundle / "rna.h5ad")
         legacy_model = load_dynamics(legacy_bundle, device=device)
-        legacy_indices = [996, 8817, 1031, 7453, 5002, 4937, 7958, 1089, 2330, 9778]
+        # The bundle contains only the ten historical starting cells, in order.
+        # Original full-input indices: 996, 8817, 1031, 7453, 5002,
+        # 4937, 7958, 1089, 2330, 9778.
+        legacy_indices = list(range(10))
         _, raw_trajectory, _ = generate_ode_trajectories(
             legacy_model, legacy_data, n_trajectories=10, n_bins=301,
             device=device, exp_dir=str(ode_dir / "secondary_model"),
             sampling_mode="index", init_time=0.0, init_indices=legacy_indices,
-            cell_type_key="cell_type", strict_index_init_time=True, return_metadata=True,
+            cell_type_key="cell_type", strict_index_init_time=True,
+            evaluation_times=[0, 1, 2, 3, 4], return_metadata=True,
         )
         secondary_mapper = build_transport_map(
             map_model_path=paths["training_map"], input_dim1=50, input_dim2=50,

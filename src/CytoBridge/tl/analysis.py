@@ -853,6 +853,7 @@ def generate_ode_trajectories(
         perturbation_cfg: Optional[Dict[str, Any]] = None,
         perturbation_reference_adata = None,
         return_metadata: bool = False,
+        evaluation_times: Optional[Sequence[float]] = None,
 ) -> Tuple[List[np.ndarray], np.ndarray, np.ndarray]:
     if int(n_bins) < 2:
         raise ValueError(f"n_bins must be >=2, got {n_bins}")
@@ -892,7 +893,9 @@ def generate_ode_trajectories(
     #print(use_mass,score_use,interaction_use)
     ode_func = ODEFunc(model,use_mass=use_mass,score_use=score_use,interaction_use=interaction_use).to(device)
 
-    all_times = np.sort(np.asarray(adata.obs[samples_key], dtype=float))
+    all_times = np.sort(np.asarray(adata.obs[samples_key] if evaluation_times is None else evaluation_times, dtype=float))
+    if all_times.size == 0 or not np.all(np.isfinite(all_times)):
+        raise ValueError("evaluation_times must contain finite time points")
     all_times_unique = np.unique(all_times)
     init_time_used = float(sampling_meta["init_time"])
     eval_time_mask = all_times_unique >= (init_time_used - 1e-8)
