@@ -4,41 +4,26 @@ MOFI reconstructs continuous cell-state dynamics from time-series single-cell mu
 
 ![MOFI framework](web/assets/Figure1.png)
 
-## System requirements
+## System requirements and installation
 
-The environment used for package-import and CUDA checks was Windows 11 Pro 25H2, Python 3.10.20, PyTorch 2.6.0 and CUDA 12.4, on an NVIDIA GeForce RTX 4090 with 24 GB GPU memory. Linux and macOS have not been tested.
+The notebooks have been exercised with Python 3.10 and PyTorch 2.6.0 with CUDA 12.4 on Windows and Linux with NVIDIA GPUs. The biological analyses use substantial memory and disk space; running times depend on the dataset and hardware. CPU-only execution has not been validated for the complete notebooks.
 
-Dependency versions:
-
-| Dependencies | Versions |
-| --- | --- |
-| PyTorch, torchvision, torchaudio | 2.6.0, 0.21.0, 2.6.0 (CUDA 12.4 builds) |
-| NumPy, SciPy, pandas, scikit-learn | 1.26.4, 1.15.3, 2.3.3, 1.7.1 |
-| Scanpy, AnnData, h5py, umap-learn | 1.11.3, 0.11.4, 3.14.0, 0.5.12 |
-| torchdiffeq, torchsde, POT, GeomLoss | 0.2.5, 0.2.6, 0.9.7, 0.2.6 |
-| PHATE, scVelo | 2.0.0, 0.3.3 |
-| Matplotlib, seaborn, Plotly, Kaleido | 3.10.9, 0.13.2, 7.0.0, 0.2.1 |
-| PyYAML, tqdm, joblib, ipywidgets | 6.0.2, 4.67.1, 1.5.3, 8.1.7 |
-
-An NVIDIA GPU is recommended for model training. The simulation training script also accepts `--device cpu`, although CPU runs take longer. A desktop with 16 GB RAM is recommended for the small simulation; larger biological datasets may need more memory. No specialised hardware is needed to view the saved notebook figures or the web demo.
-
-## Getting started
-
-From the repository root:
+Create a clean Python 3.10 environment and install the CUDA 12.4 build of PyTorch before installing the remaining dependencies. For example, from the repository root:
 
 ```bash
 git clone https://github.com/jiantaoShen12/MOFI.git
 cd MOFI
 conda create -n mofi python=3.10 -y
 conda activate mofi
+python -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cu124
 python -m pip install -r requirements.txt
 python -m pip install -e .
+python -m pip check
+python scripts/check_paper_data.py
 jupyter lab
 ```
 
-Installation typically takes around 10–30 minutes on a desktop computer, depending on the internet connection and dependency downloads.
-
-The simulation notebook includes model fitting and evaluation. The biological examples use fitted models and processed data placed under `paper_data/`; see the [data notes](paper_data/README.md). These biological data and models are not included in the repository.
+Install a compatible NVIDIA driver before running with CUDA. The Windows Sankey figure export uses Microsoft Edge in headless mode; Linux uses Kaleido. The fitted UMAP models require the versions specified in `requirements.txt`. See [data notes](paper_data/README.md) for the processed inputs, source datasets and fitted models used by the biological notebooks.
 
 ## Examples
 
@@ -47,10 +32,10 @@ The notebooks cover a simulation benchmark and four biological datasets.
 To execute a notebook from the command line using an installed Jupyter kernel:
 
 ```bash
-python scripts/execute_notebook.py notebooks/00_simulation_training_and_figure2.ipynb --kernel python3
+python scripts/execute_notebook.py notebooks/00_simulation_training_and_figure2.ipynb
 ```
 
-Use `jupyter kernelspec list` to find another installed kernel and pass its name with `--kernel`. The script saves results in the notebook.
+The runner uses the Python environment that invokes it and writes the executed notebook under `results/executed/`, leaving the source notebook unchanged. Run the other notebooks by substituting their paths. Results and intermediate files are written under `results/`.
 
 | Notebook | Analysis |
 | --- | --- |
@@ -70,14 +55,14 @@ Paths below are relative to the repository root.
 
 | Directory | Contents |
 | --- | --- |
-| `src/` | MOFI implementation in `CytoBridge/`, with the `mofi/` import alias. `Map/` handles cross-modality mapping, `tl/` model fitting and dynamics, `pp/` preprocessing, and `pl/` plotting and perturbation analysis. |
-| `configs/` | Training, analysis and perturbation settings, with selected cell indices and gene lists in `analysis_inputs/`. |
+| `src/` | MOFI implementation in `CytoBridge/`, with the `mofi/` import alias. `Map/` handles cross-modality mapping, `tl/` simulation fitting and dynamics, `pp/` preprocessing, and `pl/` plotting and perturbation analysis. |
+| `configs/` | Simulation training, analysis and perturbation settings, with selected cell indices and gene lists in `analysis_inputs/`. |
 | `notebooks/` | Simulation training and analyses for Figures 2–6; `mofi_notebook.py` provides shared notebook helpers. |
 | `scripts/` | Notebook execution and simulation data generation, training, evaluation and plotting. |
 | `datasets/simulation/` | Simulation inputs and reference gene-expression values. |
 | `models/simulation/` | Fitted simulation models and evaluation results. |
 | `downstream/plotting/` | Additional plotting routines for the biological analyses. |
-| `paper_data/` | Notes on the external biological data and fitted models needed by the notebooks. |
+| `paper_data/` | Processed biological inputs, fitted models, projections and source notes for the notebooks. |
 | `web/` | Interactive website, paper figures in `assets/`, and sampled trajectories in `demo_data/`. |
 
 ## Interactive examples

@@ -1574,7 +1574,22 @@ def build_classifier_bundle(
     subset_training = bool(cell_type_filter["selection_active"])
 
     fit_classes = selected_cell_types if subset_training else None
-    classifier = _fit_classifier(X_train, y_main, classifier_cfg, fit_classes=fit_classes)
+    fitted_weights = classifier_cfg.get("fitted_weights")
+    if fitted_weights:
+        weights_path = Path(fitted_weights)
+        if not weights_path.is_absolute():
+            weights_path = Path(__file__).resolve().parents[3] / weights_path
+        with np.load(weights_path, allow_pickle=False) as weights:
+            classifier = LogisticRegression()
+            classifier.coef_ = weights["coef"]
+            classifier.intercept_ = weights["intercept"]
+            classifier.classes_ = weights["classes"]
+        classifier.n_features_in_ = classifier.coef_.shape[1]
+        classifier.n_iter_ = np.array([1], dtype=np.int32)
+        if classifier.n_features_in_ != X_train.shape[1] or set(classifier.classes_) != set(np.unique(y_main)):
+            raise ValueError("Fitted classifier is incompatible with the selected inputs or labels")
+    else:
+        classifier = _fit_classifier(X_train, y_main, classifier_cfg, fit_classes=fit_classes)
     if subset_training:
         train_mask = _mask_for_classes(y_main, selected_cell_types)
         pred_train = classifier.predict(X_train[train_mask])

@@ -26,6 +26,7 @@ analysis:
     type: linear
     max_iter: 1200
     train_space: joint
+    fitted_weights: paper_data/inference/gse213152/fate_classifier.npz
   path_definition:
     target_cell_type: PT
   main_var_markers: [SIX2, EYA1, CITED1, MEOX1, HNF1B, EPCAM, CDH1, KRT8, KRT18, JAG1, PAX8, NPHS1, NPHS2, PODXL, WT1, MAFB, PTPRO, HNF4A, LRP2, SLC34A1, SLC5A2, SLC3A1, CUBN, AQP1, SLC12A1, UMOD, CLDN10, FXYD2, TFAP2B, CALB1]

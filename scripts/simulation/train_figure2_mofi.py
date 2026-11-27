@@ -17,7 +17,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT / "src"))
 
 import CytoBridge.pp as cb_pp  # noqa: E402
-from CytoBridge.tl.fit import fit as fit_model  # noqa: E402
+from CytoBridge.tl.simulation_training import fit_simulation as fit_model  # noqa: E402
 from CytoBridge.utils.utils import set_seed  # noqa: E402
 
 

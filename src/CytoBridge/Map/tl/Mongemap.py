@@ -64,9 +64,9 @@ class TransportMap:
           # 加载模型
         self._load_model(model_path)
         
-        print(f"✓ 传输映射初始化成功")
-        print(f"  模式: {self.mode[0]}→{self.mode[1]}")
-        print(f"  输入维度: {self.in_dim}, 输出维度: {self.out_dim}")
+        print("Transport map initialized")
+        print(f"  Mode: {self.mode[0]} -> {self.mode[1]}")
+        print(f"  Input dimension: {self.in_dim}, output dimension: {self.out_dim}")
     
     def _load_model(self, model_path: str):
         """加载模型"""
@@ -332,5 +332,5 @@ class TransportMapFactory:
             )
         }
         
-        print("\n✓ 所有传输映射创建完成")
+        print("\nAll transport maps initialized")
         return maps

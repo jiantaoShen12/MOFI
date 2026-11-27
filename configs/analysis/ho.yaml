@@ -45,6 +45,7 @@ analysis:
     type: linear
     max_iter: 1200
     train_space: joint
+    fitted_weights: paper_data/inference/ho/fate_classifier.npz
   path_definition:
     target_cell_type: organoid
   main_var_markers:

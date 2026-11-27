@@ -1,0 +1,28 @@
+{
+  "latent_dim": 50,
+  "model_config": {
+    "components": [
+      "velocity",
+      "growth"
+    ],
+    "velocity_net": {
+      "hidden_dim": 400,
+      "n_layers": 2,
+      "residual": false
+    },
+    "growth_net": {
+      "activation": "relu",
+      "hidden_dim": 400,
+      "n_layers": 3,
+      "residual": false
+    },
+    "multi": {
+      "hidden_dim": 32,
+      "input_dim1": 50,
+      "input_dim2": 50,
+      "mode": "(1,2)",
+      "multi_alpha": 0.1,
+      "multi_use": true
+    }
+  }
+}

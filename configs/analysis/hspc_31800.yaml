@@ -37,6 +37,7 @@ analysis:
   classifier:
     type: linear
     train_space: joint
+    fitted_weights: paper_data/inference/hspc_31800/fate_classifier.npz
     exclude_cell_types: []
   path_definition:
     target_cell_type: MkP

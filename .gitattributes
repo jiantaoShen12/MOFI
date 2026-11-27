@@ -1,0 +1,3 @@
+paper_data/inference/** -text
+paper_data/umap/** -text
+paper_data/SHA256SUMS text eol=lf

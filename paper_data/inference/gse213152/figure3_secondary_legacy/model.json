@@ -1,0 +1,19 @@
+{
+  "latent_dim": 50,
+  "model_config": {
+    "components": [
+      "velocity",
+      "growth"
+    ],
+    "velocity_net": {
+      "hidden_dim": 400,
+      "n_layers": 2,
+      "residual": false
+    },
+    "growth_net": {
+      "hidden_dim": 400,
+      "n_layers": 2,
+      "residual": false
+    }
+  }
+}

@@ -1401,6 +1401,7 @@ def plot_ode_trajectories_v2(
             for t in unique_times
         ]
 
+    np.save(os.path.join(output_path, "background_2d.npy"), X_2d)
     np.save(os.path.join(output_path, "ode_traj_2d.npy"), traj_2d)
     np.save(os.path.join(output_path, "ode_point_2d.npy"), point_2d)
     print(f"[generate_ode_trajectories] trajectories saved to {output_path}")

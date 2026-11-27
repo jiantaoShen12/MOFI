@@ -7,7 +7,7 @@ optional dependencies (for example `scanpy`) are unavailable.
 from importlib import import_module
 
 
-__all__ = ["pp", "tl", "pl", "utils", "Map", "reproducibility", "manuscript"]
+__all__ = ["pp", "tl", "pl", "utils", "Map", "reproducibility", "manuscript", "inference"]
 
 
 def __getattr__(name: str):

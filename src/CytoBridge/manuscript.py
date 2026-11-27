@@ -109,7 +109,7 @@ def train_figure2(
     """Train the Figure 2 model with the same public MOFI fit API as the paper."""
 
     from CytoBridge.pp import preprocess
-    from CytoBridge.tl.fit import fit
+    from CytoBridge.tl.simulation_training import fit_simulation
     from CytoBridge.utils.utils import set_seed
 
     root = Path(repo_root).resolve()
@@ -154,7 +154,7 @@ def train_figure2(
 
     paper_parameters = epochs_override is None
     started = time.perf_counter()
-    fitted = fit(trained_input, config=config, batch_size=400, device=device)
+    fitted = fit_simulation(trained_input, config=config, batch_size=400, device=device)
     elapsed = float(time.perf_counter() - started)
     output_adata = out / "adata.h5ad"
     fitted.write_h5ad(output_adata)
@@ -189,7 +189,7 @@ def evaluate_figure2(
     """Evaluate Figure 2 with :class:`CytoBridge.tl.trainer.TrainingPipeline`."""
 
     import torch
-    from CytoBridge.tl.trainer import TrainingPipeline
+    from CytoBridge.tl.simulation_training import evaluate_simulation
     from CytoBridge.utils import load_model_from_adata
 
     trained = ad.read_h5ad(_root_path(adata_path, repo_root))
@@ -204,10 +204,8 @@ def evaluate_figure2(
         )
         for value in times
     ]
-    evaluator = TrainingPipeline(
-        load_model_from_adata(trained), cfg, 400, device, tensors, progress_callback=False
-    )
-    metrics = evaluator.evaluate(trained, tensors, times, val=val)
+    metrics = evaluate_simulation(load_model_from_adata(trained).to(device), trained,
+                                  tensors, times, device, val=val)
     if training_seconds is not None:
         metrics["training_seconds"] = float(training_seconds)
     evaluation_path = output_dir / "evaluation.json"

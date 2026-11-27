@@ -388,8 +388,14 @@ def render_sankey_html(plot_df: pd.DataFrame, html_path: Path, *, write_static: 
         # concurrent Jupyter sessions otherwise collide on Edge's singleton
         # lock and make static export appear nondeterministic.
         try:
-            fig.write_image(str(html_path.with_suffix(".png")))
-            fig.write_image(str(html_path.with_suffix(".pdf")))
+            if sys.platform == "win32":
+                # Kaleido 0.2.1 may hang before raising on Windows; Edge's
+                # headless subprocess is isolated and has an explicit timeout.
+                _export_plotly_html_with_edge(html_path, width=width, height=height)
+            else:
+                fig.write_image(str(html_path.with_suffix(".png")))
+                fig.write_image(str(html_path.with_suffix(".pdf")))
+                fig.write_image(str(html_path.with_suffix(".svg")))
         except Exception as exc:
             print(f"Kaleido export failed ({exc}); trying the local Edge renderer", flush=True)
             try:

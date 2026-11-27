@@ -33,6 +33,7 @@ analysis:
     type: linear
     max_iter: 1200
     train_space: joint
+    fitted_weights: paper_data/inference/hc_author5/fate_classifier.npz
   path_definition:
     target_cell_type: IN-MGE
   main_var_markers:
