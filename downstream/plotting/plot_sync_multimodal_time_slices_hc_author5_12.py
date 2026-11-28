@@ -146,7 +146,7 @@ def _set_panel_frame(ax: plt.Axes, *, is_real: bool) -> None:
         spine.set_visible(True)
         spine.set_linewidth(1.6)
         spine.set_color("black")
-        spine.set_linestyle("-") if is_real else (0, (3, 2))
+        spine.set_linestyle("-" if is_real else (0, (3, 2)))
 
 
 def _draw_panel(
@@ -284,7 +284,8 @@ def main(args: Optional[argparse.Namespace] = None) -> None:
 
         # 绘制 RNA 面板（上层）
         ax_rna = axes[0][col]
-        _draw_panel(ax_rna, main_coords, np.asarray(item["main_labels"]).astype(str), f"RNA t={float(t):g}", is_real=bool(item["is_real"]))
+        week = np.interp(float(t), real_times, [18, 19, 23, 24, 52])
+        _draw_panel(ax_rna, main_coords, np.asarray(item["main_labels"]).astype(str), f"Week {week:g}", is_real=bool(item["is_real"]))
         # 设置上层背景色
         if item["is_real"]:
             ax_rna.set_facecolor("#E8EAEC")   # 真实时间点
@@ -293,7 +294,7 @@ def main(args: Optional[argparse.Namespace] = None) -> None:
 
         # 绘制 ATAC 面板（下层）
         ax_atac = axes[1][col]
-        _draw_panel(ax_atac, sub_coords, np.asarray(item["sub_labels"]).astype(str), f"ATAC t={float(t):g}", is_real=bool(item["is_real"]))
+        _draw_panel(ax_atac, sub_coords, np.asarray(item["sub_labels"]).astype(str), f"Week {week:g}", is_real=bool(item["is_real"]))
         # 设置下层背景色
         if item["is_real"]:
             ax_atac.set_facecolor("#E9E4DB")   # 真实时间点
