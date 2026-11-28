@@ -57,7 +57,7 @@ PAPER_DATASETS: Dict[str, PaperDataset] = {
         analysis_map_path="results/reviewer_inputs/gse213152/map_gse213152_analysis.pt",
         analysis_config="configs/analysis/gse213152.yaml",
         time_key="time_point_processed",
-        cell_type_key="cell_type_fine",
+        cell_type_key="cell_type",
         expected_shape=(55177, 50),
     ),
     "hspc_31800": PaperDataset(
@@ -576,7 +576,10 @@ def run_paper_ode_v3(
         n_bins=n_bins,
         dim_reduction="umap",
         bg_obs_key=background_key,
-        bg_palette="tab10",
+        bg_palette=(
+            {"Nephron_progenitor": "#C18D51", "dev": "#5689AE", "LOH_DN": "#64956D", "PT": "#B35965", "POD": "#9678AA"}
+            if dataset_id == "gse213152" else "tab10"
+        ),
         device=device,
         sampling_mode=sampling_mode,
         init_time=t0,
@@ -651,7 +654,7 @@ def run_paper_ode_v3(
             time_ticks=secondary_unique_times,
             bg_obs_values=secondary_labels,
             bg_obs_name=spec.cell_type_key,
-            bg_palette="tab10",
+            bg_palette=common["bg_palette"],
             traj_cmap="sunset1",
             show_axes=True,
         )

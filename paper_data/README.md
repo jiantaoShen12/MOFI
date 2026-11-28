@@ -11,6 +11,8 @@ The following identifiers link to the original public data. Cell counts and feat
 
 The historical brain-organoid preprocessing removed day 16 (106 records in the 10,000-row pre-filter input); day 12 was retained. The brain-organoid time-course RNA and ATAC data come from separate experiments; matching row IDs in these prepared files should not be interpreted as proof of same-cell multiome measurements. Dataset terms remain those of the original sources; the software license does not automatically apply to those data.
 
+For kidney organoids, `rna.h5ad` and `atac.h5ad` use the historical manuscript annotations in `obs["cell_type"]`, including `dev`. The corresponding fitted five-class classifier was originally fitted using 60,845 cells; the release contains the 55,177-cell subset.
+
 For the kidney ATAC trajectory panel, the historical full-data model uses 60,845 RNA observations and an ATAC background of 60,845 observations. The release includes only the ten selected 50-dimensional starting cells for this panel, together with the time grid and the background time/cell labels; its fitted UMAP model is provided separately.
 
 The shared feature matrices are the processed values supplied to PCA in the historical analysis, not raw counts and not values recovered exactly by reversing 50 PCs. The 50-dimensional representation, feature names and PCA transformation arrays are retained for the notebook analyses. Dataset-specific normalization settings have not yet been independently verified.

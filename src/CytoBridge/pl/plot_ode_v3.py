@@ -84,11 +84,17 @@ def _build_bg_palette(labels_plot, bg_palette, max_legend_items=10):
     else:
         legend_labels = list(order)
 
-    palette = sns.color_palette(bg_palette, n_colors=len(legend_labels))
-    color_map = {
-        lab: _soften_color(palette[i], saturation_keep=0.80, white_mix=0.24)
-        for i, lab in enumerate(legend_labels)
-    }
+    if isinstance(bg_palette, dict):
+        missing = set(legend_labels) - set(bg_palette)
+        if missing:
+            raise ValueError(f"Background palette is missing labels: {sorted(missing)}")
+        color_map = {lab: mpl.colors.to_rgb(bg_palette[lab]) for lab in legend_labels}
+    else:
+        palette = sns.color_palette(bg_palette, n_colors=len(legend_labels))
+        color_map = {
+            lab: _soften_color(palette[i], saturation_keep=0.80, white_mix=0.24)
+            for i, lab in enumerate(legend_labels)
+        }
     colors = np.array([color_map[lab] for lab in labels_plot], dtype=float)
     handles = [
         Line2D(

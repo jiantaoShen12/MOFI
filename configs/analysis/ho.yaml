@@ -261,8 +261,13 @@ analysis:
     - EB
     missing_target_policy: zero
   key_molecule:
+    panel_mode: full_space
+    de_contrast:
+      mode: last_vs_early
+      target_times: [9.0]
+      reference_times: [0.0, 1.0, 2.0, 3.0, 4.0, 5.0]
     path_quantile: 0.75
-    fdr_alpha: 0.05
+    fdr_alpha: 1.0e-15
     min_abs_log2fc: 0.25
     min_pct: 0.1
     top_k: 50
@@ -416,8 +421,25 @@ prior_build_notes: V2 priors emphasize interpretable developmental phases and cr
 figure:
   theme: journal
   dpi: 260
+  fdr_alpha: 1.0e-15
   marker_top_n: 8
   cell_type_top_n: 8
   program_top_n: 12
   perturb_max_groups: 4
   perturb_max_cell_types: 8
+  volcano_labeling:
+    p_col_for_y: p_adj
+    y_jitter_ties: 0.0
+    exclude_opposite_direction_only: true
+    require_significant: true
+    filter_noise_labels: false
+    label_rank_mode: default
+    top_n_per_side: 15
+    fallback_policy: keep_short
+    direction_sets:
+      main:
+        early: [POU5F1, TDGF1, LIN28A, EPCAM, FOXD3-AS1, L1TD1]
+        late: [STMN2, GPM6A, GAP43, ELAVL4, MAPT, NR2F1, HES6]
+      sec:
+        early: [POU5F1, TDGF1, LIN28A]
+        late: [STMN2, GPM6A, ELAVL4]

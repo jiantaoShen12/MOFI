@@ -1569,7 +1569,7 @@ def plot_key_molecule_volcano(
         ax.axhline(float(axis_spec["cut_fraction"]), color="#555555", linewidth=0.7, linestyle="--", alpha=0.8)
         ax.set_title(title)
         ax.set_xlabel("log2FC")
-        ax.set_ylabel("-log10(adj p)")
+        ax.set_ylabel("-log10(p)" if p_col_for_y == "p_value" else "-log10(adj p)")
         ax.set_ylim(0.0, 1.0)
         ax.set_yticks(axis_spec["tick_positions"])
         ax.set_yticklabels(axis_spec["tick_labels"])

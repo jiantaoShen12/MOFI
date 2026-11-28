@@ -20,7 +20,7 @@ inference:
     - mode: coarse_dense
 analysis:
   time_key: time_point_processed
-  cell_type_key: cell_type_fine
+  cell_type_key: cell_type
   decode_mode: pca_projection
   classifier:
     type: linear
@@ -89,6 +89,13 @@ figure:
   marker_top_n: 12
   cell_type_top_n: 5
   cell_type_exclude: []
+  cell_type_order: [Nephron_progenitor, dev, LOH_DN, PT, POD]
+  cell_type_palette:
+    Nephron_progenitor: '#C18D51'
+    dev: '#5689AE'
+    LOH_DN: '#64956D'
+    PT: '#B35965'
+    POD: '#9678AA'
   program_top_n: 10
   perturb_max_groups: 5
   perturb_max_cell_types: 5
